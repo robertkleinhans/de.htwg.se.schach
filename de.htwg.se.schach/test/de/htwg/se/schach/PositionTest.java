@@ -12,7 +12,7 @@ public class PositionTest {
 	Position pos;
 	
 	@Test
-	public void testConstructor() {
+	public void testPosition() {
 		try {
 			pos = new Position(10,8);
 			fail("Position build with invalid values!");
