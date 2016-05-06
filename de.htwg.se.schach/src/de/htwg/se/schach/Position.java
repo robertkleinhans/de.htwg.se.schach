@@ -25,7 +25,22 @@ public class Position {
 		this.y = new_y;
 	}
 	
-	private boolean checkPos(int x, int y) {
+	boolean checkPos(int x, int y) {
 		return (x < 8 && x >= 0) && (y < 8 && y >= 0);
+	}
+	
+	public String toString() {
+		String s = String.format("X:%d Y:%d",this.x,this.y);
+		return s;
+	}
+	
+	@Override
+	public int hashCode() {
+		return this.x*10 +this.y;
+	}
+	
+
+	public boolean equals(Object obj) {
+		return obj.hashCode() == hashCode();
 	}
 }

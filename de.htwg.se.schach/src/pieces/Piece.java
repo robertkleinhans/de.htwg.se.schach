@@ -10,4 +10,12 @@ public abstract class Piece {
 	protected Team team;
 	protected Position current_pos;
 	protected Position start_position;
+	protected String shortcut;
+	
+	public String getNameShort() {
+		return this.shortcut;
+	}
+	public Position getCurPosition() {
+		return this.current_pos;
+	}
 }
