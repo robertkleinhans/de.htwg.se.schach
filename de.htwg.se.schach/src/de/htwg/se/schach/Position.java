@@ -25,7 +25,7 @@ public class Position {
 		this.y = new_y;
 	}
 	
-	boolean checkPos(int x, int y) {
+	static boolean checkPos(int x, int y) {
 		return (x < 8 && x >= 0) && (y < 8 && y >= 0);
 	}
 	

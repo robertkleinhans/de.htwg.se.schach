@@ -34,12 +34,13 @@ public class PositionTest {
 		try {
 			pos.setPos(-1,2);
 			fail("Position set to invalid values (-1,2)!");
+		} catch (AssertionError e) {
+			assertNotNull(e.getMessage());
+		}
+		
+		try {
 			pos.setPos(4, -1);
 			fail("Position set to invalid values (4,-1)!");
-			pos.setPos(-2, 9);
-			fail("Position set to invalid values (-2,9)!");
-			pos.setPos(-5, 11);
-			fail("Position set to invalid values (-5,11)!");
 		} catch (AssertionError e) {
 			assertNotNull(e.getMessage());
 		}
@@ -50,4 +51,44 @@ public class PositionTest {
 		
 	}
 
+	@Test
+	public void testCheckPos() {
+		try {
+			Position.checkPos(-1,9);
+			fail("Invalid values accepted (-1,9)!");
+		} catch (AssertionError e) {
+			assertNotNull(e.getMessage());
+		}
+		
+		try {
+			Position.checkPos(4,-2);
+			fail("Invalid values accepted (4,-2)!");
+		} catch (AssertionError e) {
+			assertNotNull(e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testHashcode() {
+		Position pos = new Position(4,3);
+		assertEquals(43,pos.hashCode());
+		pos.setPos(1, 7);
+		assertEquals(17,pos.hashCode());
+	}
+	
+	@Test
+	public void testEquals() {
+		Position pos_1 = new Position(5,2);
+		Position pos_2 = new Position(1,8);
+		assertEquals(true,pos_1.equals(pos_1));
+		assertEquals(false,pos_1.equals(pos_2));
+	}
+	
+	@Test
+	public void testToString() {
+		Position pos = new Position(4,3);
+		assertEquals("X:4 Y:3",pos.toString());
+		pos.setPos(1, 0);
+		assertEquals("X:1 Y:0",pos.toString());
+	}
 }
