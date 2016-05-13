@@ -13,12 +13,8 @@ public class PositionTest {
 	
 	@Test
 	public void testPosition() {
-		try {
-			pos = new Position(10,8);
-			fail("Position build with invalid values!");
-		} catch (AssertionError e) {
-			assertNotNull(e.getMessage());
-		}
+		pos = new Position(4,3);
+		assertNotNull(pos);
 	}
 	
 	@Test
@@ -31,19 +27,9 @@ public class PositionTest {
 	@Test
 	public void testSetPos() {
 		pos = new Position(1,1);
-		try {
-			pos.setPos(-1,2);
-			fail("Position set to invalid values (-1,2)!");
-		} catch (AssertionError e) {
-			assertNotNull(e.getMessage());
-		}
-		
-		try {
-			pos.setPos(4, -1);
-			fail("Position set to invalid values (4,-1)!");
-		} catch (AssertionError e) {
-			assertNotNull(e.getMessage());
-		}
+		pos.setPos(-2,3);
+		assertEquals(1,pos.getX());
+		assertEquals(1,pos.getY());
 		
 		pos.setPos(0, 7);
 		assertEquals(0,pos.getX());
@@ -53,19 +39,13 @@ public class PositionTest {
 
 	@Test
 	public void testCheckPos() {
-		try {
-			Position.checkPos(-1,9);
-			fail("Invalid values accepted (-1,9)!");
-		} catch (AssertionError e) {
-			assertNotNull(e.getMessage());
-		}
-		
-		try {
-			Position.checkPos(4,-2);
-			fail("Invalid values accepted (4,-2)!");
-		} catch (AssertionError e) {
-			assertNotNull(e.getMessage());
-		}
+		Position test = new Position(4,3);
+		assertFalse(test.validPosition(-3,2));
+		assertFalse(test.validPosition(4, -9));
+		assertFalse(test.validPosition(3, 10));
+		assertFalse(test.validPosition(10, 2));
+		assertFalse(test.validPosition(20,40));
+		assertTrue(test.validPosition(1, 7));
 	}
 	
 	@Test
