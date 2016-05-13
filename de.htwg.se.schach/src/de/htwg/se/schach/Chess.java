@@ -1,5 +1,7 @@
 package de.htwg.se.schach;
 
+import de.htwg.se.schach.model.Chessboard;
+
 public class Chess {
 	public static void main(String[] args) {
 		Chessboard chess = new Chessboard();
