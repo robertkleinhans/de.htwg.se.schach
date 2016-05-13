@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import pieces.Bishop;
 import pieces.Queen;
+import pieces.Rook;
 
 public class Chessboard {
 	private Map<Position,pieces.Piece> figure_map;
@@ -13,7 +15,9 @@ public class Chessboard {
 	
 	public Chessboard() {
 		this.figure_map = new HashMap<Position, pieces.Piece>();
-		placeQueen();
+		//placeQueen();
+		//placeBishop();
+		placeRook();
 	}
 	
 	public void printChessboard() {
@@ -43,6 +47,13 @@ public class Chessboard {
 		System.out.println(b.getAllMoves().toString());
 		printMoves(b.getAllMoves());
 		this.figure_map.put(b.getCurPosition(),b);
+	}
+	
+	public void placeRook() {
+		Rook r = new Rook(1,1);
+		System.out.println(r.getAllMoves().toString());
+		printMoves(r.getAllMoves());
+		this.figure_map.put(r.getCurPosition(),r);
 	}
 	
 	public void printMoves(List<Position> tmp) {
