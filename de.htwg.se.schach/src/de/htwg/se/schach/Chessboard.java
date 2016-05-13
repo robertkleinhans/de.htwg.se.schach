@@ -31,11 +31,18 @@ public class Chessboard {
 	}
 	
 	public void placeQueen() {
-		Queen q = new Queen(2,3);
+		Queen q = new Queen(3,3);
 		System.out.println(q.getAllMoves().toString());
 		printMoves(q.getAllMoves());
 		this.figure_map.put(q.getCurPosition(), q);
 		
+	}
+	
+	public void placeBishop() {
+		Bishop b = new Bishop(2,2);
+		System.out.println(b.getAllMoves().toString());
+		printMoves(b.getAllMoves());
+		this.figure_map.put(b.getCurPosition(),b);
 	}
 	
 	public void printMoves(List<Position> tmp) {
