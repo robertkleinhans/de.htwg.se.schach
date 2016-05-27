@@ -15,13 +15,7 @@ public class Position {
     
     public int getColumn() {
         return this.column;
-    }
-    
-    public int[] getPosition() {
-        int[] tmp = {this.row,this.column};
-        return tmp;
-    }
-    
+    } 
     
     @Override
     public boolean equals(Object other) {
