@@ -1,4 +1,4 @@
-package de.htwg.se.schach.model;
+package de.htwg.se.schach.control;
 
 import static org.junit.Assert.*;
 
