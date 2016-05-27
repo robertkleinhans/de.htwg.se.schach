@@ -37,7 +37,10 @@ public class PositionTest {
 	public void testEquals() {
 		Position pos_1 = new Position(5,2);
 		Position pos_2 = new Position(1,8);
-		assertEquals(true,pos_1.equals(pos_1));
-		assertEquals(false,pos_1.equals(pos_2));
+		assertFalse(pos_1.equals(new Position(5,3)));
+		assertTrue(pos_1.equals(pos_1));
+		assertFalse(pos_1.equals(pos_2));
+		assertFalse(pos_1.equals(null));
+		assertFalse(pos_1.equals(1));
 	}
 }

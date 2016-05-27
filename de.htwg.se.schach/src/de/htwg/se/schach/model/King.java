@@ -32,9 +32,11 @@ public class King extends Piece {
             ret.add(new Position(row-1,column));
             if(column+1 < 8) {
                 ret.add(new Position(row-1,column+1));
+                ret.add(new Position(row,column+1));
             }
             if(column-1 >= 0) {
                 ret.add(new Position(row-1,column-1));
+                ret.add(new Position(row,column-1));
             }
         }
         

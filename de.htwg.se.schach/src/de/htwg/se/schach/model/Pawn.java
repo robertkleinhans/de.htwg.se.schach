@@ -18,11 +18,18 @@ public class Pawn extends Piece{
         firstMove = true;
     }
     
+    public int getDirection() {
+    	return this.direction;
+    }
+    
+    public void changeFirstMove() {
+    	firstMove = false;
+    }
+    
     public List<Position> getAllMoves() {
         List<Position> ret = new LinkedList<Position>();
         if(firstMove) {
             ret.add(new Position(row+2*direction,column));
-            firstMove = false;
         } 
         if (row+direction >= 0 && row+direction < 8) {
             ret.add(new Position(row+direction,column));
