@@ -18,6 +18,22 @@ public abstract class Piece {
     
     public abstract List<Position> getAllMoves();
     
+    public void setRow(int row) {
+    	if (row <= 7 && row >= 0) {
+    		this.row = row;
+    	}
+    }
+    
+    public void setColumn(int column) {
+    	if (column <= 7 && column >= 0) {
+    		this.column = column;
+    	}
+    }
+    
+    public int getTeam() {
+    	return team;
+    }
+    
     public int getRow() {
         return row;
     }
@@ -28,10 +44,5 @@ public abstract class Piece {
     
     public String getName() {
         return cut;
-    }
-    
-    public int[] getPosition() {
-        int[] tmp = {row,column};
-        return tmp;
     }
 }
