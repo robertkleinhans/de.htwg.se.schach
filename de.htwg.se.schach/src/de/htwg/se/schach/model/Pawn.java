@@ -3,6 +3,8 @@ package de.htwg.se.schach.model;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.htwg.se.schach.control.Position;
+
 public class Pawn extends Piece{
     private boolean firstMove;
     private final int direction;
