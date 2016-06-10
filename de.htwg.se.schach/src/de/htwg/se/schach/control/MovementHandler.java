@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import de.htwg.se.schach.model.*;
-
+ 
 /**
  *
  * @author rob
@@ -40,7 +40,8 @@ public class MovementHandler {
             } else if (i == 3) {
                 figure_holder.put(new Position(0,i),new Queen(0,i,0));
                 figure_holder.put(new Position(7,i),new Queen(7,i,1));
-            } else if (i == 4) {
+            }
+            if (i == 4) {
                 figure_holder.put(new Position(0,i),new King(0,i,0));
                 figure_holder.put(new Position(7,i),new King(7,i,1));
             }
@@ -78,6 +79,14 @@ public class MovementHandler {
         } else {
             return false;
         }
+    }
+    
+    public boolean removePiece(Position pos) {
+    	if(!figure_holder.containsKey(pos)) {
+    		return false;
+    	}
+    	figure_holder.remove(pos);
+    	return true;
     }
     
     public int checkWin() {
@@ -129,8 +138,8 @@ public class MovementHandler {
             
             ret.addAll(getKingMovement(pos));
             
-        } else if (holder instanceof Pawn) {
-            
+        } else {
+        	
             ret.addAll(getPawnMovement(pos));
             
         }
