@@ -2,14 +2,11 @@ package de.htwg.se.schach.model;
 
 import static org.junit.Assert.*;
 
-import java.util.List;
-
 import org.junit.Test;
 
-import de.htwg.se.schach.control.Position;
 
 public class BishopTest {
-	
+	 
 	@Test
 	public void testBishop() {
 		Bishop bi = new Bishop(2,3,0);
@@ -41,22 +38,4 @@ public class BishopTest {
 		bi.setRow(5);
 		assertEquals(5,bi.getRow());
 	}
-	
-	@Test
-	public void testGetAllMoves() {
-		Bishop bi = new Bishop(0,0,0);
-		List<Position> tmp = bi.getAllMoves();
-		assertEquals(7, tmp.size());
-		for(int i = 1; i < 8; i++) {
-			assertTrue(tmp.contains(new Position(i,i)));
-		}
-		
-		bi.setColumn(7);
-		tmp = bi.getAllMoves();
-		assertEquals(7, tmp.size());
-		for(int i = 1; i < 8; i++) {
-			assertTrue(tmp.contains(new Position(8-i,i-1)));
-		}
-	}
-
 }
