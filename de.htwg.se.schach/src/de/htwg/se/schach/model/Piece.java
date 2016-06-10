@@ -16,8 +16,6 @@ public abstract class Piece {
         this.team = team;
     }
     
-    public abstract List<Position> getAllMoves();
-    
     public void setRow(int row) {
     	if (row <= 7 && row >= 0) {
     		this.row = row;
