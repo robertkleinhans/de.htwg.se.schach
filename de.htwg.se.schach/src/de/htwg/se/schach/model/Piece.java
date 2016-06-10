@@ -1,8 +1,5 @@
 package de.htwg.se.schach.model;
 
-import java.util.List;
-
-import de.htwg.se.schach.control.Position;
 
 public abstract class Piece {
     final int MAX_ROW = 7;
