@@ -138,6 +138,7 @@ public class PlayerHandler {
                 turn = (turn+1)%2;
             }
         }
+        System.out.println(">>> Closing now!");
         scan.close();
     }
 }

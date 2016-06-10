@@ -14,13 +14,5 @@ public class Pawn extends Piece{
         this.cut = "PA";
         firstMove = true;
     }
-    
-    public int getDirection() {
-    	return this.direction;
-    }
-    
-    public void changeFirstMove() {
-    	firstMove = false;
-    }
 }
 

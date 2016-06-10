@@ -13,16 +13,6 @@ import java.util.List;
 import java.util.Map;
 import de.htwg.se.schach.model.*;
 
-
-/*
-import de.htwg.se.schach.model.Bishop;
-import pieces.King;
-import pieces.Knight;
-import pieces.Pawn;
-import pieces.Piece;
-import pieces.Queen;
-import pieces.Rook;
-*/
 /**
  *
  * @author rob
@@ -70,6 +60,11 @@ public class MovementHandler {
         if(!move.contains(end)) {
             return false;
         }
+        
+        if(hold instanceof Pawn) {
+        	((Pawn) hold).firstMove = false;
+        }
+        
         figure_holder.put(end,hold);
         figure_holder.remove(start);
         return true;
@@ -180,7 +175,6 @@ public class MovementHandler {
                 ret.add(tmp_left);
             }
         } 
-        pawn.firstMove = false;
         return ret;
     }
     
