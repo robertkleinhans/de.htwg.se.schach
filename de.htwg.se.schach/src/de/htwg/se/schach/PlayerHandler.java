@@ -19,14 +19,13 @@ public class PlayerHandler {
     
     
     public PlayerHandler() {
-        start_game();
-        game_handler();
+    	this.view = new ChessView();
+        view.printField();
     }
     
     
     public void start_game() {
-        this.view = new ChessView();
-        view.printField();
+        game_handler();
     }
     
     public void handleShow(String inp, int team) {
