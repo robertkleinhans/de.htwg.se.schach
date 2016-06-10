@@ -417,6 +417,7 @@ public class MovementHandler {
                 if(hold == null || hold.team != team) {
                     ret.add(tmp);
                 }
+                
             }
             if (col+1 <= MAX_COLUMN) {
                 Position tmp = new Position(row+2,col+1);

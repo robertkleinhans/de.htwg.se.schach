@@ -209,6 +209,85 @@ public class MovementHandlerTest {
 	
 	@Test
 	public void testGetDiagonalMovement() {
+		//Stage 1
 		MovementHandler mov = new MovementHandler();
+		mov.getMovement(new Position(0,3));
+		mov.getMovement(new Position(7,3));
+		
+		assertTrue(mov.removePiece(new Position(1,3)));
+		assertTrue(mov.movePiece(new Position(0,3), new Position(4,3), 0));
+		mov.getMovement(new Position(4,3));
+		
+		assertTrue(mov.movePiece(new Position(4,3), new Position(4,0), 0));
+		mov.getMovement(new Position(4,0));
+		
+		assertTrue(mov.movePiece(new Position(4,0), new Position(4,7), 0));
+		mov.getMovement(new Position(4,7));
+		
+		//Stage 2
+		mov = new MovementHandler();
+		assertTrue(mov.removePiece(new Position(6,3)));
+		assertTrue(mov.movePiece(new Position(7,3), new Position(4,3), 1));
+		mov.getMovement(new Position(4,3));
+		
+		assertTrue(mov.movePiece(new Position(4,3), new Position(4,0), 1));
+		mov.getMovement(new Position(4,0));
+		
+		assertTrue(mov.movePiece(new Position(4,0), new Position(4,7), 1));
+		mov.getMovement(new Position(4,7));
+	}
+	
+	@Test
+	public void testGetKnightMovement() {
+		//Stage 1
+		MovementHandler mov = new MovementHandler();
+		mov.getMovement(new Position(0,1));
+		mov.getMovement(new Position(0,6));
+		mov.getMovement(new Position(7,1));
+		mov.getMovement(new Position(7,6));
+		
+		assertTrue(mov.movePiece(new Position(0,1), new Position(2,2), 0));
+		mov.getMovement(new Position(2,2));
+		
+		assertTrue(mov.movePiece(new Position(2,2), new Position(3,0), 0));
+		mov.getMovement(new Position(3,0));
+		
+		assertTrue(mov.movePiece(new Position(3,0), new Position(4,2), 0));
+		mov.getMovement(new Position(4,2));
+		
+		assertTrue(mov.movePiece(new Position(4,2), new Position(2,3), 0));
+		mov.getMovement(new Position(2,3));
+		
+		assertTrue(mov.movePiece(new Position(2,3), new Position(3,5), 0));
+		mov.getMovement(new Position(3,5));
+		
+		assertTrue(mov.movePiece(new Position(3,5), new Position(4,7), 0));
+		mov.getMovement(new Position(4,7));
+		
+		assertTrue(mov.movePiece(new Position(4,7), new Position(6,6), 0));
+		mov.getMovement(new Position(6,6));
+		
+		assertTrue(mov.movePiece(new Position(6,6), new Position(5,4), 0));
+		mov.getMovement(new Position(5,4));
+		
+		assertTrue(mov.movePiece(new Position(5,4), new Position(3,3), 0));
+		mov.getMovement(new Position(3,3));
+		
+		assertTrue(mov.movePiece(new Position(3,3), new Position(4,1), 0));
+		mov.getMovement(new Position(4,1));
+		
+		//Stage 2
+		mov = new MovementHandler();
+		assertTrue(mov.movePiece(new Position(7,1), new Position(5,2), 1));
+		mov.getMovement(new Position(5,2));
+		
+		assertTrue(mov.movePiece(new Position(5,2), new Position(4,4), 1));
+		mov.getMovement(new Position(4,4));
+		
+		assertTrue(mov.movePiece(new Position(4,4), new Position(2,3), 1));
+		mov.getMovement(new Position(2,3));
+		
+		assertTrue(mov.movePiece(new Position(2,3), new Position(0,2), 1));
+		mov.getMovement(new Position(0,2));
 	}
 }
