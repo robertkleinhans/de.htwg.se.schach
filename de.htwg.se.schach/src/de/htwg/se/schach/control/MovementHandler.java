@@ -199,11 +199,13 @@ public class MovementHandler {
             ret.add(new Position(row+1,col));
             if(col+1 < 8) {
                 ret.add(new Position(row+1,col+1));
-                ret.add(new Position(row,col+1));
+                ret.add(new Position(row, col+1));
+                
             }
             if(col-1 >= 0) {
                 ret.add(new Position(row+1,col-1));
-                ret.add(new Position(row,col-1));
+                ret.add(new Position(row, col-1));
+                
             }
         }
         
@@ -211,9 +213,15 @@ public class MovementHandler {
             ret.add(new Position(row-1,col));
             if(col+1 < 8) {
                 ret.add(new Position(row-1,col+1));
+                if(!ret.contains(new Position(row,col+1))) {
+                	ret.add(new Position(row, col+1));
+                }
             }
             if(col-1 >= 0) {
                 ret.add(new Position(row-1,col-1));
+                if(!ret.contains(new Position(row,col-1))) {
+                	ret.add(new Position(row, col-1));
+                }
             }
         }
         
@@ -221,7 +229,11 @@ public class MovementHandler {
             Piece hold = figure_holder.get(pos_tmp);
             
             if (!(hold != null && hold.team == team)) {
-                ret_clean.add(pos_tmp);
+            	/*
+            	if(!ret_clean.contains(pos_tmp)) {
+            		ret_clean.add(pos_tmp);
+            	}*/
+            	ret_clean.add(pos_tmp);
             }
         }
         
@@ -337,7 +349,7 @@ public class MovementHandler {
         
         //Left
         for(int i = 1; i <= MAX_COLUMN; i++) {
-            if(col-i <= MAX_COLUMN) {
+            if(col-i >= 0) {
                 Position tmp = new Position(row,col-i);
                 
                 Piece hold = figure_holder.get(tmp);
