@@ -16,7 +16,7 @@ public class MovementHandlerTest {
 	public void testMovementHandler() {
 		MovementHandler mov = new MovementHandler();
 		Map<Position,Piece> tmp = mov.getField();
-		assertTrue(tmp.size() == 32);
+		assertEquals(32,tmp.size());
 	}
 	
 	@Test
@@ -49,17 +49,23 @@ public class MovementHandlerTest {
 	@Test
 	public void testCheckWin() {
 		MovementHandler mov = new MovementHandler();
-		assertTrue(mov.checkWin() == -1);
+		assertEquals(mov.checkWin(),-1);
+		//assertTrue(mov.checkWin() == -1);
 		assertTrue(mov.removePiece(new Position(0,4)));
-		assertTrue(mov.checkWin() == 1);
+		assertEquals(mov.checkWin(), 1);
+		//assertTrue(mov.checkWin() == 1);
 		
 		mov = new MovementHandler();
-		assertTrue(mov.checkWin() == -1);
+		//assertTrue(mov.checkWin() == -1);
+		assertEquals(mov.checkWin(),-1);
 		assertTrue(mov.removePiece(new Position(7,4)));
-		assertTrue(mov.checkWin() == 0);
+		
+		//assertTrue(mov.checkWin() == 0);
+		assertEquals(mov.checkWin(), 0);
 		
 		assertTrue(mov.removePiece(new Position(0,4)));
-		assertTrue(mov.checkWin() == -1);
+		assertEquals(mov.checkWin(), -1);
+		//assertTrue(mov.checkWin() == -1);
 	}
 	
 	@Test

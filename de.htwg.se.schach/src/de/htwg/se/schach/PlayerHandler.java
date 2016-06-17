@@ -24,14 +24,15 @@ public class PlayerHandler {
     }
     
     
-    public void start_game() {
-        game_handler();
+    public void startGame() {
+        gameHandler();
     }
     
     public void handleShow(String inp, int team) {
         String[] parts = inp.split(" ");
         if (parts.length != 2) {
             System.out.println(">>> Invalid command!");
+            return;
         }
 
         // - 65 to map A to 0, B to 1, ...
@@ -116,7 +117,7 @@ public class PlayerHandler {
     
     
     
-    public void game_handler() {
+    public void gameHandler() {
         int turn = 1;
         Scanner scan = new Scanner(System.in);
         String holder;
