@@ -3,6 +3,7 @@ package de.htwg.se.schach.view;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.ByteArrayInputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,8 @@ public class GuiChess {
 	private MovementHandler movH;
 	
 	Point last_click;
+	
+	int team;
 	
 	public GuiChess(MovementHandler mov) {
 		movH = mov;
@@ -98,6 +101,9 @@ public class GuiChess {
 		
 	}
 	
+	public void setTeam(int new_team) {
+		this.team = new_team;
+	}
 	
 	public Point calc_point(Point tmp) {
 		int x = tmp.x;
@@ -137,13 +143,13 @@ public class GuiChess {
         Point cur_click = new Point(click_x, click_y);
         
         if (cur_click != last_click) {
-        	move_piece(last_click, cur_click);
+        	move_piece(last_click, cur_click,this.team);
         }
         
         last_click = cur_click;
     }
     
-    public void move_piece(Point start, Point end) {
+    public void move_piece(Point start, Point end, int team_id) {
     	Position pos_sta = new Position(start.y,start.x);
     	Position pos_end = new Position(end.y,end.x);
     	List<Position> tmp_mov = movH.getMovement(pos_sta);
@@ -153,7 +159,17 @@ public class GuiChess {
     	
     	
     	if(tmp_mov.contains(pos_end)) {
-    		movH.movePiece(pos_sta, pos_end, team)
+    		if(board_brain.containsKey(end)) {
+    			board_brain.remove(end);
+    		}
+    		movH.movePiece(pos_sta, pos_end, team_id);
+    		JLabel tmp_label = board_brain.remove(end);
+    		board_brain.put(end, tmp_label);
+    		
+    		ByteArrayInputStream in = new ByteArrayInputStream("skip".getBytes());
+    		System.setIn(in);
+    		System.setIn(System.in);
+    		
     	}
     }
     

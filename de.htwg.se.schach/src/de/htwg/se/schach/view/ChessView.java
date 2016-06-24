@@ -21,8 +21,8 @@ public class ChessView {
     
     private MovementHandler movH;
     
-    public ChessView() {
-        this.movH = new MovementHandler();
+    public ChessView(MovementHandler movement) {
+        this.movH = movement;
     }
     
     public boolean movePiece(Position start, Position end, int team) {

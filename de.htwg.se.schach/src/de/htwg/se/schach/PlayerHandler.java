@@ -9,6 +9,7 @@ package de.htwg.se.schach;
 
 import java.util.Scanner;
 import de.htwg.se.schach.view.*;
+import de.htwg.se.schach.control.MovementHandler;
 import de.htwg.se.schach.control.Position;
 /**
  *
@@ -16,10 +17,14 @@ import de.htwg.se.schach.control.Position;
  */
 public class PlayerHandler {
     private ChessView view;
+    private MovementHandler mov;
+    private GuiChess gui;
     
     
     public PlayerHandler() {
-    	this.view = new ChessView();
+    	mov = new MovementHandler();
+    	this.view = new ChessView(mov);
+    	gui = new GuiChess(mov);
         view.printField();
     }
     
@@ -119,6 +124,10 @@ public class PlayerHandler {
     
     public void gameHandler() {
         int turn = 1;
+        
+        gui.setTeam(turn);
+        gui.show_frame();
+        
         Scanner scan = new Scanner(System.in);
         String holder;
         boolean quit_flag = false;
@@ -129,14 +138,24 @@ public class PlayerHandler {
         while (!quit_flag) {
             System.out.printf(">>>[Player%d]: ",turn);
             holder = scan.nextLine();
-            if(holder.equals("quit")) {
-                quit_flag = true;
+            
+            if(holder.equals("skip")) {
+            	view.printField();
+            	turn = (turn+1)%2;
+            	gui.setTeam(turn);
+            } else {
+            	if(holder.equals("quit")) {
+            		quit_flag = true;
+	            }
+	            
+	            if(handleInput(holder,turn)) {
+	                view.printField();
+	                turn = (turn+1)%2;
+	                gui.setTeam(turn);
+	            }
             }
             
-            if(handleInput(holder,turn)) {
-                view.printField();
-                turn = (turn+1)%2;
-            }
+            
         }
         System.out.println(">>> Closing now!");
         scan.close();
