@@ -36,7 +36,7 @@ public class ChessView {
     public void viewMovement(Position pos) {
         List<Position> ret = new LinkedList<Position>();
         Map<Position,Piece> figure_holder = movH.getField();
-        
+
         ret = movH.getMovement(pos);
         
         System.out.printf("|__||_A_||_B_||_C_||_D_||_E_||_F_||_G_||_H_|\n");

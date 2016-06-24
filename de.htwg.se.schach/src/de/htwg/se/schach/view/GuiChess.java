@@ -3,8 +3,8 @@ package de.htwg.se.schach.view;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.ByteArrayInputStream;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +27,7 @@ public class GuiChess {
 	
 	Point last_click;
 	
-	int team;
+	int team = 0;
 	
 	public GuiChess(MovementHandler mov) {
 		movH = mov;
@@ -97,8 +97,6 @@ public class GuiChess {
             }
         }
 		
-		
-		
 	}
 	
 	public void setTeam(int new_team) {
@@ -140,35 +138,55 @@ public class GuiChess {
                 counter ++;
             }
         }
+
         Point cur_click = new Point(click_x, click_y);
         
-        if (cur_click != last_click) {
+        if(board_brain.containsKey(cur_click)) {
+        	show_piece(cur_click);
+        	
+        }
+        
+        
+        if (cur_click != last_click && last_click != null) {
         	move_piece(last_click, cur_click,this.team);
         }
         
         last_click = cur_click;
+        
+    }
+    
+    public void show_piece(Point start) {
+    	Position pos = new Position(start.y-1,start.x-1);
+
+    	
+    	List<Position> move = new LinkedList<Position>();
+    	
+    	move = movH.getMovement(pos);
+
+    	System.out.println(move.size());
     }
     
     public void move_piece(Point start, Point end, int team_id) {
-    	Position pos_sta = new Position(start.y,start.x);
-    	Position pos_end = new Position(end.y,end.x);
-    	List<Position> tmp_mov = movH.getMovement(pos_sta);
+    	Position pos_sta = new Position(start.y-1,start.x-1);
+    	Position pos_end = new Position(end.y-1,end.x-1);
     	
-    	
-    	
+    	List<Position> tmp_mov = new LinkedList<Position>();
+    	tmp_mov = movH.getMovement(pos_sta);
     	
     	
     	if(tmp_mov.contains(pos_end)) {
     		if(board_brain.containsKey(end)) {
     			board_brain.remove(end);
     		}
+
     		movH.movePiece(pos_sta, pos_end, team_id);
-    		JLabel tmp_label = board_brain.remove(end);
-    		board_brain.put(end, tmp_label);
+
     		
-    		ByteArrayInputStream in = new ByteArrayInputStream("skip".getBytes());
-    		System.setIn(in);
-    		System.setIn(System.in);
+    		JLabel tmp_label = board_brain.remove(start);
+    		System.out.println(end);
+    		tmp_label.setLocation(calc_point(new Point(end.x-1,end.y-1)));
+
+    		board_brain.put(end, tmp_label);
     		
     	}
     }
@@ -181,7 +199,30 @@ public class GuiChess {
         tmp.setLocation(x,y);
         tmp.setSize(81,81);
         
-        board_brain.put(tmp.getLocation(), tmp);
+       
+        int counter = 0;
+        while (true) {
+            if (x-80 <= 0) {
+            	x = counter+1;
+                break;
+            } else {
+                x -= 80;
+                counter++;
+            }
+        }
+        
+        counter = 0;
+        while (true) {
+            if (y-80 <= 0) {
+            	y = counter+1;
+                break;
+            } else {
+                y -= 80;
+                counter ++;
+            }
+        }
+        
+        board_brain.put(new Point(x,y), tmp);
         
         chess_frame.add(tmp);
     }
