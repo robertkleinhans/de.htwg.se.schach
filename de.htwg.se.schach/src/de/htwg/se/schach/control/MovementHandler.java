@@ -239,12 +239,13 @@ public class MovementHandler {
 		return retClean;
 	}
 
-	private List<Position> getDiagonalMovement(Position pos) {
+	
+	
+	List<Position> getLeftUpper(Position pos, int team) {
 		int row = pos.getRow();
 		int col = pos.getColumn();
-		int team = figureHolder.get(pos).getTeam();
 		List<Position> ret = new LinkedList<Position>();
-		// Left-upper
+		
 		for (int i = 1; i <= MAXROW; i++) {
 			if (row - i >= 0 && col - i >= 0) {
 				Position tmp = new Position(row - i, col - i);
@@ -255,14 +256,20 @@ public class MovementHandler {
 					ret.add(tmp);
 				} else if (hold.getTeam() != team) {
 					ret.add(tmp);
-					break;
+					return ret;
 				} else {
-					break;
+					return ret;
 				}
 			}
 		}
-
-		// Right-upper
+		return ret;
+	}
+	
+	List<Position> getRightUpper(Position pos, int team) {
+		int row = pos.getRow();
+		int col = pos.getColumn();
+		List<Position> ret = new LinkedList<Position>();
+		
 		for (int i = 1; i <= MAXROW; i++) {
 			if (row - i >= 0 && col + i <= MAXCOLUMN) {
 				Position tmp = new Position(row - i, col + i);
@@ -273,14 +280,20 @@ public class MovementHandler {
 					ret.add(tmp);
 				} else if (hold.getTeam() != team) {
 					ret.add(tmp);
-					break;
+					return ret;
 				} else {
-					break;
+					return ret;
 				}
 			}
 		}
-
-		// Left-lower
+		return ret;
+	}
+	
+	List<Position> getLeftLower(Position pos, int team) {
+		int row = pos.getRow();
+		int col = pos.getColumn();
+		List<Position> ret = new LinkedList<Position>();
+		
 		for (int i = 1; i <= MAXROW; i++) {
 			if (row + i <= MAXROW && col - i >= 0) {
 				Position tmp = new Position(row + i, col - i);
@@ -291,14 +304,20 @@ public class MovementHandler {
 					ret.add(tmp);
 				} else if (hold.getTeam() != team) {
 					ret.add(tmp);
-					break;
+					return ret;
 				} else {
-					break;
+					return ret;
 				}
 			}
 		}
-
-		// Right-lower
+		return ret;
+	}
+	
+	List<Position> getRightLower(Position pos, int team) {
+		int row = pos.getRow();
+		int col = pos.getColumn();
+		List<Position> ret = new LinkedList<Position>();
+		
 		for (int i = 1; i <= MAXROW; i++) {
 			if (row + i <= MAXROW && col + i <= MAXCOLUMN) {
 				Position tmp = new Position(row + i, col + i);
@@ -309,12 +328,27 @@ public class MovementHandler {
 					ret.add(tmp);
 				} else if (hold.getTeam() != team) {
 					ret.add(tmp);
-					break;
+					return ret;
 				} else {
-					break;
+					return ret;
 				}
 			}
 		}
+		return ret;
+	}
+	private List<Position> getDiagonalMovement(Position pos) {
+		int row = pos.getRow();
+		int col = pos.getColumn();
+		int team = figureHolder.get(pos).getTeam();
+		List<Position> ret = new LinkedList<Position>();
+		
+		ret.addAll(getLeftUpper(pos,team));
+
+		ret.addAll(getRightUpper(pos,team));
+
+		ret.addAll(getRightLower(pos,team));
+		
+		ret.addAll(getLeftLower(pos,team));
 		return ret;
 	}
 
