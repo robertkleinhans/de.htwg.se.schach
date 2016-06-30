@@ -50,22 +50,22 @@ public class MovementHandlerTest {
 	public void testCheckWin() {
 		MovementHandler mov = new MovementHandler();
 		assertEquals(mov.checkWin(),-1);
-		//assertTrue(mov.checkWin() == -1);
+		
 		assertTrue(mov.removePiece(new Position(0,4)));
 		assertEquals(mov.checkWin(), 1);
-		//assertTrue(mov.checkWin() == 1);
+		
 		
 		mov = new MovementHandler();
-		//assertTrue(mov.checkWin() == -1);
+		
 		assertEquals(mov.checkWin(),-1);
 		assertTrue(mov.removePiece(new Position(7,4)));
 		
-		//assertTrue(mov.checkWin() == 0);
+		
 		assertEquals(mov.checkWin(), 0);
 		
 		assertTrue(mov.removePiece(new Position(0,4)));
 		assertEquals(mov.checkWin(), -1);
-		//assertTrue(mov.checkWin() == -1);
+		
 	}
 	
 	@Test

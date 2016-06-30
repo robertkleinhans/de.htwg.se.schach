@@ -93,9 +93,10 @@ public class MovementHandler {
         boolean team_1 = false;
         boolean team_0 = false;
         for (Piece pie : figure_holder.values()) {
-            if(("KI").equals(pie.getName())) {
-            	team_1 = (pie.team == 1);
-            	team_0 = (pie.team == 1);
+            if(("KI").equals(pie.getName()) && pie.team == 1) {
+            	team_1 = true;
+            } else if (("KI").equals(pie.getName())&& pie.team == 0) {
+            	team_0 = true;
             }
         }
         if(team_1 && !team_0) {
