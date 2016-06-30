@@ -4,10 +4,10 @@ package de.htwg.se.schach.model;
 public abstract class Piece {
     final int MAX_ROW = 7;
     final int MAX_COLUMN = 7;
-    public int row;
-    public int column;
-    public String cut;
-    public final int team;
+    private int row;
+    private int column;
+    private String cut;
+    private final int team;
     
     public Piece(int team) {
         this.team = team;
@@ -38,6 +38,14 @@ public abstract class Piece {
     }
     
     public String getName() {
-        return cut;
+        return getCut();
     }
+
+	public String getCut() {
+		return cut;
+	}
+
+	public void setCut(String cut) {
+		this.cut = cut;
+	}
 }

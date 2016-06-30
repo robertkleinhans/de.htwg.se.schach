@@ -26,7 +26,7 @@ public class Position {
             return false;
         }
         Position tmp = (Position) other;
-        return (this.row == tmp.row && this.column == tmp.column);
+        return this.row == tmp.row && this.column == tmp.column;
     }
     
     @Override

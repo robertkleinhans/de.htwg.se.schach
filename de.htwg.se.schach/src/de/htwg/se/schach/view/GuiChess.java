@@ -70,15 +70,15 @@ public class GuiChess {
                 
                 if(figures.containsKey(tmp)) {
                 	Piece tmp_piece = figures.get(tmp);
-                	if (tmp_piece.team == 0) {
+                	if (tmp_piece.getTeam() == 0) {
                 		sb.append("img/black");
                 	} else {
                 		sb.append("img/white");
                 	}
                 	
-                	tmp_point = new Point((tmp_piece.column*80), (tmp_piece.row*80));
+                	tmp_point = new Point((tmp_piece.getColumn()*80), (tmp_piece.getRow()*80));
                 	
-                	switch(tmp_piece.cut) {
+                	switch(tmp_piece.getCut()) {
                 	
                 	case "BI":
                 		sb.append("_bishop.png");

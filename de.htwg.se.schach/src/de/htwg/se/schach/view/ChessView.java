@@ -51,14 +51,14 @@ public class ChessView {
                 if(ret.contains(tmp)) {
                     System.out.printf(">");
                     if(figure_holder.containsKey(tmp)) {
-                        System.out.printf("%d%s",figure_holder.get(tmp).team,figure_holder.get(tmp).getName());
+                        System.out.printf("%d%s",figure_holder.get(tmp).getTeam(),figure_holder.get(tmp).getName());
                     } else {
                         System.out.printf("---");
                     }
                     System.out.printf("<");
                 } else {
                     if(figure_holder.containsKey(tmp)) {
-                        System.out.printf("[%d%s]",figure_holder.get(tmp).team,figure_holder.get(tmp).getName());
+                        System.out.printf("[%d%s]",figure_holder.get(tmp).getTeam(),figure_holder.get(tmp).getName());
                     } else {
                         System.out.printf("[---]");
                     }
@@ -79,7 +79,7 @@ public class ChessView {
             for(int j = 0; j <= MAX_COLUMN; j++) {
                 Position tmp = new Position(i,j);
                 if(figure_holder.containsKey(tmp)) {
-                    System.out.printf("[%d%s]",figure_holder.get(tmp).team,figure_holder.get(tmp).getName());
+                    System.out.printf("[%d%s]",figure_holder.get(tmp).getTeam(),figure_holder.get(tmp).getName());
                 } else {
                     System.out.printf("[---]");
                 }

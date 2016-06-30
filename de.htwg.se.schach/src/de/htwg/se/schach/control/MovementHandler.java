@@ -53,7 +53,7 @@ public class MovementHandler {
 
 	public boolean movePiece(Position start, Position end, int team) {
 		Piece hold = figureHolder.get(start);
-		if (hold == null || hold.team != team) {
+		if (hold == null || hold.getTeam() != team) {
 			return false;
 		}
 		List<Position> move = getMovement(start);
@@ -62,7 +62,7 @@ public class MovementHandler {
 		}
 
 		if (hold instanceof Pawn) {
-			((Pawn) hold).firstMove = false;
+			((Pawn) hold).setFirstMove(false);
 		}
 
 		figureHolder.put(end, hold);
@@ -74,7 +74,7 @@ public class MovementHandler {
 		if (!figureHolder.containsKey(pos)) {
 			return false;
 		} else {
-			return figureHolder.get(pos).team == team;
+			return figureHolder.get(pos).getTeam() == team;
 		}
 	}
 
@@ -90,9 +90,9 @@ public class MovementHandler {
 		boolean team1 = false;
 		boolean team0 = false;
 		for (Piece pie : figureHolder.values()) {
-			if (("KI").equals(pie.getName()) && pie.team == 1) {
+			if (("KI").equals(pie.getName()) && pie.getTeam() == 1) {
 				team1 = true;
-			} else if (("KI").equals(pie.getName()) && pie.team == 0) {
+			} else if (("KI").equals(pie.getName()) && pie.getTeam() == 0) {
 				team0 = true;
 			}
 		}
@@ -148,31 +148,31 @@ public class MovementHandler {
 		Pawn pawn = (Pawn) figureHolder.get(pos);
 		List<Position> ret = new LinkedList<Position>();
 
-		if (row + pawn.direction >= 0 && row + pawn.direction <= MAXROW) {
-			Position tmp = new Position(row + pawn.direction, col);
+		if (row + pawn.getDirection() >= 0 && row + pawn.getDirection() <= MAXROW) {
+			Position tmp = new Position(row + pawn.getDirection(), col);
 
 			Piece hold = figureHolder.get(tmp);
 			if (hold == null) {
 				ret.add(tmp);
 
-				Position tmp2 = new Position(row + 2 * pawn.direction, col);
+				Position tmp2 = new Position(row + 2 * pawn.getDirection(), col);
 				Piece hold2 = figureHolder.get(tmp2);
-				if (pawn.firstMove && hold2 == null) {
+				if (pawn.isFirstMove() && hold2 == null) {
 					ret.add(tmp2);
 				}
 			}
 
-			Position tmpRight = new Position(row + pawn.direction, col + 1);
+			Position tmpRight = new Position(row + pawn.getDirection(), col + 1);
 			Piece holdRight = figureHolder.get(tmpRight);
 
-			if (holdRight != null && holdRight.team != pawn.team) {
+			if (holdRight != null && holdRight.getTeam() != pawn.getTeam()) {
 				ret.add(tmpRight);
 			}
 
-			Position tmpLeft = new Position(row + pawn.direction, col - 1);
+			Position tmpLeft = new Position(row + pawn.getDirection(), col - 1);
 			Piece holdLeft = figureHolder.get(tmpLeft);
 
-			if (holdLeft != null && holdLeft.team != pawn.team) {
+			if (holdLeft != null && holdLeft.getTeam() != pawn.getTeam()) {
 				ret.add(tmpLeft);
 			}
 		}
@@ -182,7 +182,7 @@ public class MovementHandler {
 	private List<Position> getKingMovement(Position pos) {
 		int row = pos.getRow();
 		int col = pos.getColumn();
-		int team = figureHolder.get(pos).team;
+		int team = figureHolder.get(pos).getTeam();
 		List<Position> ret = new LinkedList<Position>();
 
 		List<Position> retClean = new LinkedList<Position>();
@@ -220,7 +220,7 @@ public class MovementHandler {
 		for (Position posTmp : ret) {
 			Piece hold = figureHolder.get(posTmp);
 
-			if (!(hold != null && hold.team == team)) {
+			if (!(hold != null && hold.getTeam() == team)) {
 				retClean.add(posTmp);
 			}
 		}
@@ -230,7 +230,7 @@ public class MovementHandler {
 	private List<Position> getDiagonalMovement(Position pos) {
 		int row = pos.getRow();
 		int col = pos.getColumn();
-		int team = figureHolder.get(pos).team;
+		int team = figureHolder.get(pos).getTeam();
 		List<Position> ret = new LinkedList<Position>();
 		// Left-upper
 		for (int i = 1; i <= MAXROW; i++) {
@@ -241,7 +241,7 @@ public class MovementHandler {
 
 				if (hold == null) {
 					ret.add(tmp);
-				} else if (hold.team != team) {
+				} else if (hold.getTeam() != team) {
 					ret.add(tmp);
 					break;
 				} else {
@@ -259,7 +259,7 @@ public class MovementHandler {
 
 				if (hold == null) {
 					ret.add(tmp);
-				} else if (hold.team != team) {
+				} else if (hold.getTeam() != team) {
 					ret.add(tmp);
 					break;
 				} else {
@@ -277,7 +277,7 @@ public class MovementHandler {
 
 				if (hold == null) {
 					ret.add(tmp);
-				} else if (hold.team != team) {
+				} else if (hold.getTeam() != team) {
 					ret.add(tmp);
 					break;
 				} else {
@@ -295,7 +295,7 @@ public class MovementHandler {
 
 				if (hold == null) {
 					ret.add(tmp);
-				} else if (hold.team != team) {
+				} else if (hold.getTeam() != team) {
 					ret.add(tmp);
 					break;
 				} else {
@@ -309,7 +309,7 @@ public class MovementHandler {
 	private List<Position> getHorVerMovement(Position pos) {
 		int row = pos.getRow();
 		int col = pos.getColumn();
-		int team = figureHolder.get(pos).team;
+		int team = figureHolder.get(pos).getTeam();
 		List<Position> ret = new LinkedList<Position>();
 
 		// Right
@@ -321,7 +321,7 @@ public class MovementHandler {
 
 				if (hold == null) {
 					ret.add(tmp);
-				} else if (hold.team != team) {
+				} else if (hold.getTeam() != team) {
 					ret.add(tmp);
 					break;
 				} else {
@@ -339,7 +339,7 @@ public class MovementHandler {
 
 				if (hold == null) {
 					ret.add(tmp);
-				} else if (hold.team != team) {
+				} else if (hold.getTeam() != team) {
 					ret.add(tmp);
 					break;
 				} else {
@@ -356,7 +356,7 @@ public class MovementHandler {
 				Piece hold = figureHolder.get(tmp);
 				if (hold == null) {
 					ret.add(tmp);
-				} else if (hold.team != team) {
+				} else if (hold.getTeam() != team) {
 					ret.add(tmp);
 					break;
 				} else {
@@ -374,7 +374,7 @@ public class MovementHandler {
 
 				if (hold == null) {
 					ret.add(tmp);
-				} else if (hold.team != team) {
+				} else if (hold.getTeam() != team) {
 					ret.add(tmp);
 					break;
 				} else {
@@ -389,7 +389,7 @@ public class MovementHandler {
 	private List<Position> getKnightMovement(Position pos) {
 		int row = pos.getRow();
 		int col = pos.getColumn();
-		int team = figureHolder.get(pos).team;
+		int team = figureHolder.get(pos).getTeam();
 		List<Position> ret = new LinkedList<Position>();
 
 		if (row + 2 <= MAXROW) {
@@ -397,7 +397,7 @@ public class MovementHandler {
 				Position tmp = new Position(row + 2, col - 1);
 				Piece hold = figureHolder.get(tmp);
 
-				if (hold == null || hold.team != team) {
+				if (hold == null || hold.getTeam() != team) {
 					ret.add(tmp);
 				}
 
@@ -406,7 +406,7 @@ public class MovementHandler {
 				Position tmp = new Position(row + 2, col + 1);
 				Piece hold = figureHolder.get(tmp);
 
-				if (hold == null || hold.team != team) {
+				if (hold == null || hold.getTeam() != team) {
 					ret.add(tmp);
 				}
 			}
@@ -416,7 +416,7 @@ public class MovementHandler {
 				Position tmp = new Position(row + 1, col - 2);
 				Piece hold = figureHolder.get(tmp);
 
-				if (hold == null || hold.team != team) {
+				if (hold == null || hold.getTeam() != team) {
 					ret.add(tmp);
 				}
 			}
@@ -424,7 +424,7 @@ public class MovementHandler {
 				Position tmp = new Position(row + 1, col + 2);
 				Piece hold = figureHolder.get(tmp);
 
-				if (hold == null || hold.team != team) {
+				if (hold == null || hold.getTeam() != team) {
 					ret.add(tmp);
 				}
 			}
@@ -434,7 +434,7 @@ public class MovementHandler {
 				Position tmp = new Position(row - 2, col - 1);
 				Piece hold = figureHolder.get(tmp);
 
-				if (hold == null || hold.team != team) {
+				if (hold == null || hold.getTeam() != team) {
 					ret.add(tmp);
 				}
 			}
@@ -442,7 +442,7 @@ public class MovementHandler {
 				Position tmp = new Position(row - 2, col + 1);
 				Piece hold = figureHolder.get(tmp);
 
-				if (hold == null || hold.team != team) {
+				if (hold == null || hold.getTeam() != team) {
 					ret.add(tmp);
 				}
 			}
@@ -452,7 +452,7 @@ public class MovementHandler {
 				Position tmp = new Position(row - 1, col - 2);
 				Piece hold = figureHolder.get(tmp);
 
-				if (hold == null || hold.team != team) {
+				if (hold == null || hold.getTeam() != team) {
 					ret.add(tmp);
 				}
 			}
@@ -460,7 +460,7 @@ public class MovementHandler {
 				Position tmp = new Position(row - 1, col + 2);
 				Piece hold = figureHolder.get(tmp);
 
-				if (hold == null || hold.team != team) {
+				if (hold == null || hold.getTeam() != team) {
 					ret.add(tmp);
 				}
 			}
