@@ -44,22 +44,17 @@ public class PlayerHandler {
     public void handleShow(String inp) {
         String[] parts = inp.split(" ");
         if (parts.length != 2) {
-            //System.out.println(invalid);
         	LOGGER.info(invalid);
             return;
         }
 
-        // - 65 to map A to 0, B to 1, ...
         int colStart = ((int) parts[1].charAt(0)) - 65;
-        // - 49 to map '1' to 0, '2' to 1, ...
         int rowStart = (int) parts[1].charAt(1) - 49;
         
         if(!checkValue(colStart)) {
         	LOGGER.info(colError);
-            //System.out.println(colError);
             return;
         } else if (!checkValue(rowStart)) {
-            //System.out.println(rowError);
         	LOGGER.info(rowError);
             return;
         }
@@ -82,12 +77,10 @@ public class PlayerHandler {
         String[] parts = inp.split("-");
         if (parts.length != 2) {
         	LOGGER.info(invalid);
-            //System.out.println(invalid);
             return false;
         }
         if(parts[0].length() != 2 || parts[1].length() != 2) {
         	LOGGER.info(invalid);
-            //System.out.println(invalid);
             return false;
         }
 
@@ -97,16 +90,13 @@ public class PlayerHandler {
         
         if(!checkValue(colStart)) {
         	LOGGER.info(colError);
-            //System.out.println(colError);
             return false;
         } else if (!checkValue(rowStart)) {
         	LOGGER.info(rowError);
-            //System.out.println(rowError);
             return false;
         }
         Position start = new Position(rowStart, colStart);
         if(!view.checkPiece(start, team)) {
-            //System.out.println(">>> None of your Pieces are on this position!");
             LOGGER.info(">>> None of your Pieces are on this position!");
             return false;
         }
@@ -118,11 +108,9 @@ public class PlayerHandler {
         
         if(!checkValue(colEnd)) {
         	LOGGER.info(colError);
-            //System.out.println(colError);
             return false;
         } else if (!checkValue(rowEnd)) {
         	LOGGER.info(rowError);
-            //System.out.println(rowError);
             return false;
         }
         
@@ -132,7 +120,6 @@ public class PlayerHandler {
             return true;
         } else {
         	LOGGER.info(">>> Unknown Error : Could not make the move!");
-            //System.out.println(">>> Unknown Error : Could not make the move!");
             return false;
         }
     }
@@ -159,11 +146,7 @@ public class PlayerHandler {
         LOGGER.info("HINT: Write the movement like this: A2-A3");
         LOGGER.info("HINT: To see aviable moves: show D7");
         LOGGER.info(">>> Game started:");
-        /*
-        System.out.println("HINT: Write the movement like this: A2-A3");
-        System.out.println("HINT: To see aviable moves: show D7");
-        System.out.println(">>> Game started:");
-        */
+
         while (true) {
         	if(mov.checkWin() != -1) {
         		LOGGER.info("[MATCH END]");
@@ -173,18 +156,14 @@ public class PlayerHandler {
         		LOGGER.info(">>> Closing now!");
         		gui.quit();
         		
-        		/*
-        		System.out.println("[MATCH END]");
-        		System.out.printf("PLAYER %d WON!%n", mov.checkWin());
-        		System.out.println(">>> Closing now!");
-        		*/
+
         		break;
         	}
         	
         	sb.setLength(0);
         	sb.append(">>>[Player").append(String.valueOf(turn)).append("]: ");
         	LOGGER.info(sb.toString());
-            //System.out.printf(">>>[Player%d]: ",turn);
+
             
             while(!sig.input_given()) {
             	// busy waiting
@@ -192,11 +171,11 @@ public class PlayerHandler {
             com = sig.get_command();
             
             LOGGER.info(com);
-            //System.out.printf("%n");
+
             if(("quit").equals(com)) {
             	gui.quit();
             	LOGGER.info(">>> Closing now!");
-            	//System.out.println(">>> Closing now!");
+
             	break;
             }
             
