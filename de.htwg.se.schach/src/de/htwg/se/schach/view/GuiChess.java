@@ -23,23 +23,36 @@ public class GuiChess {
 	final int MAX_COLUMN = 7;
 	private Map<Point,JLabel>board_brain;
 	
-	private MovementHandler movH;
-	
-	Point last_click;
+	Signal sig;
+	String first = "";
 	
 	int team = 0;
 	
-	public GuiChess(MovementHandler mov) {
-		movH = mov;
+	public GuiChess(Signal sig) {
 		board_brain = new HashMap<Point, JLabel>();
-		
+		this.sig = sig;
 		chess_frame = new JFrame("Chess");
         chess_frame.setContentPane(new GuiBoard());
-        chess_frame.setSize(740,760);
+        chess_frame.setSize(646,668);
         chess_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         chess_frame.setResizable(false);
         
+        for(int i = 0; i < 8; i++) {
+        	char c = (char) ('A' + i);
+        	JLabel label = new JLabel(String.valueOf(c));
+        	label.setLocation(new Point((i*80)+30,0));
+        	label.setSize(20,20);
+        	chess_frame.add(label);
+        	
+        	JLabel num = new JLabel(String.valueOf(i+1));
+        	num.setLocation(0,(80*i)+30);
+        	num.setSize(20,20);
+        	chess_frame.add(num);
+        }
+        
+        
         chess_frame.setLayout(null);
+        chess_frame.repaint();
         
         chess_frame.addMouseListener(new MouseAdapter() {
             @Override
@@ -47,8 +60,6 @@ public class GuiChess {
                 handle_click(e.getPoint());
             }
         });
-        
-        initialize_pieces(movH.getField());
 	}
 	
 	public void initialize_pieces(Map<Position,Piece> figures) {
@@ -68,7 +79,7 @@ public class GuiChess {
                 		sb.append("img/black");
                 	}
                 	
-                	tmp_point = calc_point(new Point(tmp_piece.column, tmp_piece.row));
+                	tmp_point = new Point(tmp_piece.column, tmp_piece.row);
                 	
                 	switch(tmp_piece.cut) {
                 	
@@ -99,97 +110,43 @@ public class GuiChess {
 		
 	}
 	
-	public void setTeam(int new_team) {
-		this.team = new_team;
-	}
-	
-	public Point calc_point(Point tmp) {
-		int x = tmp.x;
-		int y = tmp.y;
-		
-		Point ret = new Point(40+(81*x),40+(81*y));
-		return ret;
-	}
-	
 
     public void handle_click(Point p) {
-        int x = p.x - 43;
-        int y = p.y - 65;
-        int click_x;
-        int click_y;
+        int x = p.x - 25;
+        int y = p.y - 25;
+        int row = 0;
+        int col = 0;
         int counter = 0;
-        while (true) {
-            if (x-80 <= 0) {
-            	click_x = counter+1;
-                break;
-            } else {
-                x -= 80;
-                counter++;
-            }
+        while (x > 80) {
+        	x-=80;
+        	counter++;
         }
-        
+        col = counter;
         counter = 0;
-        while (true) {
-            if (y-80 <= 0) {
-            	click_y = counter+1;
-                break;
-            } else {
-                y -= 80;
-                counter ++;
-            }
+        
+        while (y > 80) {
+        	y-= 80;
+        	counter++;
         }
-
-        Point cur_click = new Point(click_x, click_y);
+        row = counter;
         
-        if(board_brain.containsKey(cur_click)) {
-        	show_piece(cur_click);
-        	
+        char col_c = (char) (col+65);
+        StringBuilder sb = new StringBuilder();
+        
+        if(first.equals("")) {
+        	sb.append(col_c).append(String.valueOf(row+1));
+        	this.first = sb.toString();
+        	sb.setLength(0);
+        	sb.append("show ").append(this.first);
+        	this.sig.set_input(sb.toString());
+        } else {
+        	sb.append(this.first).append("-").append(col_c).append(String.valueOf(row+1));
+        	this.sig.set_input(sb.toString());
+        	this.first = "";
         }
-        
-        
-        if (cur_click != last_click && last_click != null) {
-        	move_piece(last_click, cur_click,this.team);
-        }
-        
-        last_click = cur_click;
         
     }
     
-    public void show_piece(Point start) {
-    	Position pos = new Position(start.y-1,start.x-1);
-
-    	
-    	List<Position> move = new LinkedList<Position>();
-    	
-    	move = movH.getMovement(pos);
-
-    	System.out.println(move.size());
-    }
-    
-    public void move_piece(Point start, Point end, int team_id) {
-    	Position pos_sta = new Position(start.y-1,start.x-1);
-    	Position pos_end = new Position(end.y-1,end.x-1);
-    	
-    	List<Position> tmp_mov = new LinkedList<Position>();
-    	tmp_mov = movH.getMovement(pos_sta);
-    	
-    	
-    	if(tmp_mov.contains(pos_end)) {
-    		if(board_brain.containsKey(end)) {
-    			board_brain.remove(end);
-    		}
-
-    		movH.movePiece(pos_sta, pos_end, team_id);
-
-    		
-    		JLabel tmp_label = board_brain.remove(start);
-    		System.out.println(end);
-    		tmp_label.setLocation(calc_point(new Point(end.x-1,end.y-1)));
-
-    		board_brain.put(end, tmp_label);
-    		
-    	}
-    }
     
     public void add_piece(String fname, int x, int y) {
         
@@ -227,12 +184,17 @@ public class GuiChess {
         chess_frame.add(tmp);
     }
     
+    public void show() {
+    	chess_frame.setVisible(true);
+    }
+    
     public void remove_piece(int x, int y) {
     	Point tmp = new Point(x,y);
     	board_brain.remove(tmp);
     }
     
-    public void show_frame() {
-        chess_frame.setVisible(true);
+    public void quit() {
+    	chess_frame.setVisible(false);
+    	chess_frame.dispose();
     }
 }

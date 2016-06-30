@@ -1,29 +1,33 @@
 package de.htwg.se.schach.view;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class GuiBoard extends JPanel {
 	
-	private BufferedImage board;
-	
-	public GuiBoard() {
-		try {
-			board = ImageIO.read(new File("img/chess_board.png"));
-		} catch (IOException e) {
-			System.out.println("[ERROR] could not load chess_board!");
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		int x;
+		int y;
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				x = i*80;
+				y = j*80;
+				if((i+j)%2 == 0) {
+					g.setColor(Color.WHITE);
+				} else  {
+					g.setColor(Color.LIGHT_GRAY);
+				}
+				g.fillRect(x, y, 80, 80);
+			}
 		}
 	}
 	
 	@Override
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		
-		g.drawImage(board, 0, 0, this);
+	public Dimension getPreferredSize() {
+		return new Dimension(80,80);
 	}
 }

@@ -7,7 +7,6 @@
 package de.htwg.se.schach;
 
 
-import java.util.Scanner;
 import de.htwg.se.schach.view.*;
 import de.htwg.se.schach.control.MovementHandler;
 import de.htwg.se.schach.control.Position;
@@ -17,6 +16,7 @@ import de.htwg.se.schach.control.Position;
  */
 public class PlayerHandler {
     private ChessView view;
+    private GuiChess gui;
     private MovementHandler mov;
     
     
@@ -122,34 +122,40 @@ public class PlayerHandler {
     
     public void gameHandler() {
         int turn = 1;
-        
-        
-        Scanner scan = new Scanner(System.in);
-        String holder;
         boolean quit_flag = false;
+        Signal sig = new Signal();
+        String com;
+        
+        this.gui = new GuiChess(sig);
+        TuiInput tui = new TuiInput(sig);
+        tui.start();
+        gui.show();
+        
         System.out.println("HINT: Write the movement like this: A2-A3");
         System.out.println("HINT: To see aviable moves: show D7");
         System.out.println(">>> Game started:");
         
         while (!quit_flag) {
             System.out.printf(">>>[Player%d]: ",turn);
-            holder = scan.nextLine();
             
-
-        	if(holder.equals("quit")) {
-        		quit_flag = true;
+            while(!sig.input_given()) {
+            	// busy waiting
+            }
+            com = sig.get_command();
+            
+            if(com.equals("quit")) {
+            	gui.quit();
+            	System.out.println(">>> Closing now!");
+            	System.exit(0);
             }
             
-            if(handleInput(holder,turn)) {
+            if(handleInput(com,turn)) {
                 view.printField();
                 turn = (turn+1)%2;
 	                
 	        }
-            
-            
-            
+            sig.reset();
         }
-        System.out.println(">>> Closing now!");
-        scan.close();
+        
     }
 }
