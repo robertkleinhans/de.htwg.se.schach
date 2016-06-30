@@ -65,9 +65,8 @@ public class PlayerHandler {
         
     }
     
-    public boolean handleInput(String inp,int team) {
-    	
-        if (("quit").equals(inp)) {
+    boolean preCheck(String inp) {
+    	if (("quit").equals(inp)) {
             return true;
         } else if (inp.startsWith("show")) {
             handleShow(inp);
@@ -88,13 +87,35 @@ public class PlayerHandler {
 
         int rowStart = (int) parts[0].charAt(1) - 49;
         
-        if(!checkValue(colStart)) {
+        if(!checkNumbers(colStart,rowStart)) {
+        	return false;
+        }
+        return true;
+    }
+    
+    boolean checkNumbers(int valA, int valB) {
+    	if(!checkValue(valA)) {
         	LOGGER.info(colError);
             return false;
-        } else if (!checkValue(rowStart)) {
+        } else if (!checkValue(valB)) {
         	LOGGER.info(rowError);
             return false;
         }
+    	return true;
+    }
+    
+    public boolean handleInput(String inp,int team) {
+    	
+        if(!preCheck(inp)) {
+        	return false;
+        }
+        
+        String[] parts = inp.split("-");
+
+        int colStart = ((int) parts[0].charAt(0)) - 65;
+
+        int rowStart = (int) parts[0].charAt(1) - 49;
+       
         Position start = new Position(rowStart, colStart);
         if(!view.checkPiece(start, team)) {
             LOGGER.info(">>> None of your Pieces are on this position!");
@@ -106,12 +127,8 @@ public class PlayerHandler {
 
         int rowEnd = (int) parts[1].charAt(1) - 49;
         
-        if(!checkValue(colEnd)) {
-        	LOGGER.info(colError);
-            return false;
-        } else if (!checkValue(rowEnd)) {
-        	LOGGER.info(rowError);
-            return false;
+        if(!checkNumbers(colEnd,rowEnd)) {
+        	return false;
         }
         
         Position end = new Position(rowEnd, colEnd);
