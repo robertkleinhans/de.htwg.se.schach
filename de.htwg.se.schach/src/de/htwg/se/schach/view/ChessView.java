@@ -39,7 +39,7 @@ public class ChessView {
 
         ret = movH.getMovement(pos);
         
-        System.out.printf("|__||_A_||_B_||_C_||_D_||_E_||_F_||_G_||_H_|\n");
+        System.out.printf("|__||_A_||_B_||_C_||_D_||_E_||_F_||_G_||_H_|%n");
         
         for (int i= 0; i <= MAX_ROW; i++) {
             
@@ -64,15 +64,15 @@ public class ChessView {
                     }
                 }
             }
-            System.out.printf("\n");
+            System.out.printf("%n");
         }
-        System.out.printf("\n\n");
+        System.out.printf("%n%n");
     }
     
     public void printField() {
         Map<Position,Piece> figure_holder = movH.getField();
         
-        System.out.printf("|__||_A_||_B_||_C_||_D_||_E_||_F_||_G_||_H_|\n");
+        System.out.printf("|__||_A_||_B_||_C_||_D_||_E_||_F_||_G_||_H_|%n");
         
         for(int i = 0; i <= MAX_ROW; i++) {
             System.out.printf("|%d_|",i+1);
@@ -84,8 +84,8 @@ public class ChessView {
                     System.out.printf("[---]");
                 }
             }
-            System.out.printf("\n");
+            System.out.printf("%n");
         }
-        System.out.printf("\n");
+        System.out.printf("%n");
     }
 }
