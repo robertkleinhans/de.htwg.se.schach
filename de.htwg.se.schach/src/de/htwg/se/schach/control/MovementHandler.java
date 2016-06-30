@@ -17,13 +17,13 @@ import de.htwg.se.schach.model.*;
  * @author rob
  */
 public class MovementHandler {
-	private static final  int maxCOLUMN = 7;
-	private static final  int maxROW = 7;
+	private static final  int MAXCOLUMN = 7;
+	private static final  int MAXROW = 7;
 	private Map<Position, Piece> figureHolder;
 
 	public MovementHandler() {
 		figureHolder = new HashMap<Position, Piece>();
-		for (int i = 0; i <= maxCOLUMN; i++) {
+		for (int i = 0; i <= MAXCOLUMN; i++) {
 			figureHolder.put(new Position(1, i), new Pawn(1, i, 1, 0));
 			figureHolder.put(new Position(6, i), new Pawn(6, i, -1, 1));
 
@@ -96,9 +96,13 @@ public class MovementHandler {
 				team0 = true;
 			}
 		}
-		if (team1 && !team0) {
+		return winHelper(team1,team0);
+	}
+	
+	int winHelper(Boolean a, Boolean b) {
+		if (a && !b) {
 			return 1;
-		} else if (!team1 && team0) {
+		} else if (!a && b) {
 			return 0;
 		} else {
 			return -1;
@@ -148,7 +152,7 @@ public class MovementHandler {
 		Pawn pawn = (Pawn) figureHolder.get(pos);
 		List<Position> ret = new LinkedList<Position>();
 
-		if (row + pawn.getDirection() >= 0 && row + pawn.getDirection() <= maxROW) {
+		if (row + pawn.getDirection() >= 0 && row + pawn.getDirection() <= MAXROW) {
 			Position tmp = new Position(row + pawn.getDirection(), col);
 
 			Piece hold = figureHolder.get(tmp);
@@ -233,7 +237,7 @@ public class MovementHandler {
 		int team = figureHolder.get(pos).getTeam();
 		List<Position> ret = new LinkedList<Position>();
 		// Left-upper
-		for (int i = 1; i <= maxROW; i++) {
+		for (int i = 1; i <= MAXROW; i++) {
 			if (row - i >= 0 && col - i >= 0) {
 				Position tmp = new Position(row - i, col - i);
 
@@ -251,8 +255,8 @@ public class MovementHandler {
 		}
 
 		// Right-upper
-		for (int i = 1; i <= maxROW; i++) {
-			if (row - i >= 0 && col + i <= maxCOLUMN) {
+		for (int i = 1; i <= MAXROW; i++) {
+			if (row - i >= 0 && col + i <= MAXCOLUMN) {
 				Position tmp = new Position(row - i, col + i);
 
 				Piece hold = figureHolder.get(tmp);
@@ -269,8 +273,8 @@ public class MovementHandler {
 		}
 
 		// Left-lower
-		for (int i = 1; i <= maxROW; i++) {
-			if (row + i <= maxROW && col - i >= 0) {
+		for (int i = 1; i <= MAXROW; i++) {
+			if (row + i <= MAXROW && col - i >= 0) {
 				Position tmp = new Position(row + i, col - i);
 
 				Piece hold = figureHolder.get(tmp);
@@ -287,8 +291,8 @@ public class MovementHandler {
 		}
 
 		// Right-lower
-		for (int i = 1; i <= maxROW; i++) {
-			if (row + i <= maxROW && col + i <= maxCOLUMN) {
+		for (int i = 1; i <= MAXROW; i++) {
+			if (row + i <= MAXROW && col + i <= MAXCOLUMN) {
 				Position tmp = new Position(row + i, col + i);
 
 				Piece hold = figureHolder.get(tmp);
@@ -313,8 +317,8 @@ public class MovementHandler {
 		List<Position> ret = new LinkedList<Position>();
 
 		// Right
-		for (int i = 1; i <= maxCOLUMN; i++) {
-			if (col + i <= maxCOLUMN) {
+		for (int i = 1; i <= MAXCOLUMN; i++) {
+			if (col + i <= MAXCOLUMN) {
 				Position tmp = new Position(row, col + i);
 
 				Piece hold = figureHolder.get(tmp);
@@ -331,7 +335,7 @@ public class MovementHandler {
 		}
 
 		// Left
-		for (int i = 1; i <= maxCOLUMN; i++) {
+		for (int i = 1; i <= MAXCOLUMN; i++) {
 			if (col - i >= 0) {
 				Position tmp = new Position(row, col - i);
 
@@ -349,7 +353,7 @@ public class MovementHandler {
 		}
 
 		// up
-		for (int i = 1; i <= maxROW; i++) {
+		for (int i = 1; i <= MAXROW; i++) {
 			if (row - i >= 0) {
 				Position tmp = new Position(row - i, col);
 
@@ -366,8 +370,8 @@ public class MovementHandler {
 		}
 
 		// down
-		for (int i = 1; i <= maxROW; i++) {
-			if (row + i <= maxROW) {
+		for (int i = 1; i <= MAXROW; i++) {
+			if (row + i <= MAXROW) {
 				Position tmp = new Position(row + i, col);
 
 				Piece hold = figureHolder.get(tmp);
@@ -392,7 +396,7 @@ public class MovementHandler {
 		int col = pos.getColumn();
 		List<Position> ret = new LinkedList<Position>();
 		
-		if(row + varOne <= maxROW) {
+		if(row + varOne <= MAXROW) {
 			if (col - varTwo >= 0) {
 				Position tmp = new Position(row + varOne, col - varTwo);
 				Piece hold = figureHolder.get(tmp);
@@ -401,7 +405,7 @@ public class MovementHandler {
 					ret.add(tmp);
 				}
 			}
-			if (col + varTwo <= maxCOLUMN) {
+			if (col + varTwo <= MAXCOLUMN) {
 				Position tmp = new Position(row + varOne, col + varTwo);
 				Piece hold = figureHolder.get(tmp);
 
