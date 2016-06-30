@@ -72,32 +72,6 @@ public class GuiChess {
         	}
         	
         	tmpPoint = new Point(tmpPiece.getColumn()*80, tmpPiece.getRow()*80);
-        	
-        	/*
-        	switch(tmpPiece.getCut()) {
-        	
-        	case "BI":
-        		sb.append("_bishop");
-        		break;
-        	case "KI":
-        		sb.append("_king");
-        		break;
-        	case "KN":
-        		sb.append("_knight");
-        		break;
-        	case "PA":
-        		sb.append("_pawn");
-        		break;
-        	case "QU":
-        		sb.append("_queen");
-        		break;
-        	case "RO":
-        		sb.append("_rook");
-        		break;
-        	default:
-        		break;
-        	}
-        	*/
         	sb.append("_");
         	sb.append(tmpPiece.getCut());
         	sb.append(".png");
