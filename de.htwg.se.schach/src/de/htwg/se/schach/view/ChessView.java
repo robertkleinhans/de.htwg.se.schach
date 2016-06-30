@@ -17,8 +17,8 @@ import org.apache.log4j.Logger;
  * @author rob
  */
 public class ChessView {
-    private final int MAXCOLUMN = 7;
-    private final int MAXROW = 7;  
+    private static final int MAXCOLUMN = 7;
+    private static final int MAXROW = 7;  
     
     private static final Logger LOGGER = Logger.getLogger("de.htwg.se.schach.chessView");
     
@@ -34,6 +34,20 @@ public class ChessView {
     
     public boolean checkPiece(Position pos, int team) {
         return movH.checkPiece(pos, team);
+    }
+    
+    String innerPosition(Position pos, Map<Position,Piece> figs) {
+    	StringBuilder sb = new StringBuilder();
+    	if(figs.containsKey(pos)) {
+        	
+        	sb.append(String.valueOf(figs.get(pos).getTeam())).append(figs.get(pos).getName());
+            
+        } else {
+        	sb.append("---");
+
+
+        }
+        return sb.toString();
     }
     
     public void viewMovement(Position pos) {
@@ -58,15 +72,7 @@ public class ChessView {
                 	sb.append(">");
 
                     
-                    if(figureHolder.containsKey(tmp)) {
-                    	
-                    	sb.append(String.valueOf(figureHolder.get(tmp).getTeam())).append(figureHolder.get(tmp).getName());
-                        
-                    } else {
-                    	sb.append("---");
-
-
-                    }
+                    sb.append(innerPosition(tmp,figureHolder));
                     sb.append("<");
 
               
@@ -107,15 +113,9 @@ public class ChessView {
             
             for(int j = 0; j <= MAXCOLUMN; j++) {
                 Position tmp = new Position(i,j);
-                if(figureHolder.containsKey(tmp)) {
-                	
-                	sb.append("[").append(String.valueOf(figureHolder.get(tmp).getTeam())).append(figureHolder.get(tmp).getName()).append("]");
-                    
-             
-                } else {
-                	sb.append("[---]");
-               
-                }
+                sb.append("[");
+                sb.append(innerPosition(tmp,figureHolder));
+                sb.append("]");
             }
             LOGGER.info(sb.toString());
             sb.setLength(0);
