@@ -73,6 +73,7 @@ public class GuiChess {
         	
         	tmpPoint = new Point(tmpPiece.getColumn()*80, tmpPiece.getRow()*80);
         	
+        	/*
         	switch(tmpPiece.getCut()) {
         	
         	case "BI":
@@ -96,6 +97,9 @@ public class GuiChess {
         	default:
         		break;
         	}
+        	*/
+        	sb.append("_");
+        	sb.append(tmpPiece.getCut());
         	sb.append(".png");
         	addPiece(sb.toString(),tmpPoint.x,tmpPoint.y);
 		}
