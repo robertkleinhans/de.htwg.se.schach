@@ -59,51 +59,54 @@ public class GuiChess {
         });
 	}
 	
-	public void initialize_pieces(Map<Position,Piece> figures) {
+	
+	void initialize_helper(Position tmp, Map<Position,Piece> figs) {
 		StringBuilder sb = new StringBuilder();
 		Point tmpPoint;
+		if (figs.containsKey(tmp)) {
+			Piece tmp_piece = figs.get(tmp);
+        	if (tmp_piece.getTeam() == 0) {
+        		sb.append("img/black");
+        	} else {
+        		sb.append("img/white");
+        	}
+        	
+        	tmpPoint = new Point(tmp_piece.getColumn()*80, tmp_piece.getRow()*80);
+        	
+        	switch(tmp_piece.getCut()) {
+        	
+        	case "BI":
+        		sb.append("_bishop.png");
+        		break;
+        	case "KI":
+        		sb.append("_king.png");
+        		break;
+        	case "KN":
+        		sb.append("_knight.png");
+        		break;
+        	case "PA":
+        		sb.append("_pawn.png");
+        		break;
+        	case "QU":
+        		sb.append("_queen.png");
+        		break;
+        	case "RO":
+        		sb.append("_rook.png");
+        		break;
+        	default:
+        		break;
+        	}
+        	add_piece(sb.toString(),tmpPoint.x,tmpPoint.y);
+		}
+	}
+	
+	public void initialize_pieces(Map<Position,Piece> figures) {
 		for(int i = 0; i <= MAXROW; i++) {
             
             for(int j = 0; j <= MAXCOLUMN; j++) {
             	
             	Position tmp = new Position(i,j);
-                
-                if(figures.containsKey(tmp)) {
-                	Piece tmp_piece = figures.get(tmp);
-                	if (tmp_piece.getTeam() == 0) {
-                		sb.append("img/black");
-                	} else {
-                		sb.append("img/white");
-                	}
-                	
-                	tmpPoint = new Point(tmp_piece.getColumn()*80, tmp_piece.getRow()*80);
-                	
-                	switch(tmp_piece.getCut()) {
-                	
-                	case "BI":
-                		sb.append("_bishop.png");
-                		break;
-                	case "KI":
-                		sb.append("_king.png");
-                		break;
-                	case "KN":
-                		sb.append("_knight.png");
-                		break;
-                	case "PA":
-                		sb.append("_pawn.png");
-                		break;
-                	case "QU":
-                		sb.append("_queen.png");
-                		break;
-                	case "RO":
-                		sb.append("_rook.png");
-                		break;
-                	default:
-                		break;
-                	}
-                	add_piece(sb.toString(),tmpPoint.x,tmpPoint.y);
-            		sb.setLength(0);
-                }
+                initialize_helper(tmp,figures);
             }
         }
 		
