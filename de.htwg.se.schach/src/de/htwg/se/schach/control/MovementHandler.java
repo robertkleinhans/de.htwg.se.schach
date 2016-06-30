@@ -183,6 +183,27 @@ public class MovementHandler {
 		return ret;
 	}
 
+	List<Position> kingHelper(Position pos, int team, int varOne) {
+		List<Position> ret = new LinkedList<Position>();
+		int row = pos.getRow();
+		int col = pos.getColumn();
+		
+		if(row + varOne <= MAXROW) {
+			ret.add(new Position(row + varOne, col));
+			if (col + varOne <= MAXCOLUMN) {
+				ret.add(new Position(row + varOne, col + varOne));
+				ret.add(new Position(row, col + varOne));
+			}
+			if (col - varOne >= 0) {
+				ret.add(new Position(row + varOne, col - varOne));
+				ret.add(new Position(row, col - varOne));
+			}
+		}
+		
+		
+		return ret;
+	}
+	
 	private List<Position> getKingMovement(Position pos) {
 		int row = pos.getRow();
 		int col = pos.getColumn();
@@ -190,21 +211,8 @@ public class MovementHandler {
 		List<Position> ret = new LinkedList<Position>();
 
 		List<Position> retClean = new LinkedList<Position>();
-
-		if (row + 1 < 8) {
-			ret.add(new Position(row + 1, col));
-			if (col + 1 < 8) {
-				ret.add(new Position(row + 1, col + 1));
-				ret.add(new Position(row, col + 1));
-
-			}
-			if (col - 1 >= 0) {
-				ret.add(new Position(row + 1, col - 1));
-				ret.add(new Position(row, col - 1));
-
-			}
-		}
-
+		
+		ret.addAll(kingHelper(pos,team,1));
 		if (row - 1 >= 0) {
 			ret.add(new Position(row - 1, col));
 			if (col + 1 < 8) {
