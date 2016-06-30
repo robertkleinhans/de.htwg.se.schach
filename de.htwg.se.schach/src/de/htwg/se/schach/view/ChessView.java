@@ -45,13 +45,11 @@ public class ChessView {
         sb.append("|__||_A_||_B_||_C_||_D_||_E_||_F_||_G_||_H_|");
         LOGGER.info(sb.toString());
         sb.setLength(0);
-        //System.out.printf("|__||_A_||_B_||_C_||_D_||_E_||_F_||_G_||_H_|%n");
         
         for (int i= 0; i <= MAXROW; i++) {
 
         	sb.append("|").append(String.valueOf(i+1)).append("_|");
 
-            //System.out.printf("|%d_|",i+1);
             
             for (int j=0; j <= MAXCOLUMN; j++) {
                 Position tmp = new Position(i,j);
@@ -59,39 +57,38 @@ public class ChessView {
                 if(ret.contains(tmp)) {
                 	sb.append(">");
 
-                    //System.out.printf(">");
+                    
                     if(figureHolder.containsKey(tmp)) {
                     	
                     	sb.append(String.valueOf(figureHolder.get(tmp).getTeam())).append(figureHolder.get(tmp).getName());
                         
-                    	//System.out.printf("%d%s",figureHolder.get(tmp).getTeam(),figureHolder.get(tmp).getName());
                     } else {
                     	sb.append("---");
 
-                        //System.out.printf("---");
+
                     }
                     sb.append("<");
 
-                    //System.out.printf("<");
+              
                 } else {
                     if(figureHolder.containsKey(tmp)) {
                     	
                     	sb.append("[").append(String.valueOf(figureHolder.get(tmp).getTeam())).append(figureHolder.get(tmp).getName()).append("]");
 
-                    	//System.out.printf("[%d%s]",figureHolder.get(tmp).getTeam(),figureHolder.get(tmp).getName());
+                    	
                     } else {
                     	sb.append("---");
 
-                        //System.out.printf("[---]");
+                     
                     }
                 }
             }
             LOGGER.info(sb.toString());
             sb.setLength(0);
-            //System.out.printf("%n");
+          
         }
         LOGGER.info(sb.toString());
-        //System.out.printf("%n%n");
+    
     }
     
     public void printField() {
@@ -101,10 +98,10 @@ public class ChessView {
         sb.append("|__||_A_||_B_||_C_||_D_||_E_||_F_||_G_||_H_|");
         LOGGER.info(sb.toString());
         sb.setLength(0);
-        //System.out.printf("|__||_A_||_B_||_C_||_D_||_E_||_F_||_G_||_H_|%n");
+
         
         for(int i = 0; i <= MAXROW; i++) {
-            //System.out.printf("|%d_|",i+1);
+   
             
         	sb.append("|").append(String.valueOf(i+1)).append("_|");
             
@@ -114,17 +111,17 @@ public class ChessView {
                 	
                 	sb.append("[").append(String.valueOf(figureHolder.get(tmp).getTeam())).append(figureHolder.get(tmp).getName()).append("]");
                     
-                    //System.out.printf("[%d%s]",figureHolder.get(tmp).getTeam(),figureHolder.get(tmp).getName());
+             
                 } else {
                 	sb.append("[---]");
-                    //System.out.printf("[---]");
+               
                 }
             }
             LOGGER.info(sb.toString());
             sb.setLength(0);
-            //System.out.printf("%n");
+      
         }
         LOGGER.info(sb.toString());
-        //System.out.printf("%n");
+    
     }
 }
