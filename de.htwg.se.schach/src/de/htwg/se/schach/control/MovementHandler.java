@@ -93,12 +93,9 @@ public class MovementHandler {
         boolean team_1 = false;
         boolean team_0 = false;
         for (Piece pie : figure_holder.values()) {
-            if(pie.getName().equals("KI")) {
-                if(pie.team == 1) {
-                    team_1 = true;
-                } else {
-                    team_0 = true;
-                }
+            if(("KI").equals(pie.getName())) {
+            	team_1 = (pie.team == 1);
+            	team_0 = (pie.team == 1);
             }
         }
         if(team_1 && !team_0) {
@@ -161,12 +158,11 @@ public class MovementHandler {
             Piece hold = figure_holder.get(tmp);
             if(hold == null) {
                 ret.add(tmp);
-                if(pawn.firstMove) {
-                    Position tmp_2 = new Position(row+2*pawn.direction,col);
-                    Piece hold_2 = figure_holder.get(tmp_2);
-                    if (hold_2 == null) {
-                        ret.add(tmp_2);
-                    }
+                
+                Position tmp_2 = new Position(row+2*pawn.direction,col);
+                Piece hold_2 = figure_holder.get(tmp_2);
+                if(pawn.firstMove && hold_2 == null) {
+                    ret.add(tmp_2);
                 }
             }
             
@@ -229,16 +225,9 @@ public class MovementHandler {
             Piece hold = figure_holder.get(pos_tmp);
             
             if (!(hold != null && hold.team == team)) {
-            	/*
-            	if(!ret_clean.contains(pos_tmp)) {
-            		ret_clean.add(pos_tmp);
-            	}*/
             	ret_clean.add(pos_tmp);
             }
         }
-        
-        
-        
         return ret_clean;
     }
     
@@ -278,9 +267,9 @@ public class MovementHandler {
                     ret.add(tmp);
                 } else if(hold.team != team) {
                     ret.add(tmp);
-                    break;
+                    i = MAX_ROW + 1;
                 } else {
-                    break;
+                    i = MAX_ROW + 1;
                 }
             }
         }
@@ -296,9 +285,9 @@ public class MovementHandler {
                     ret.add(tmp);
                 } else if(hold.team != team) {
                     ret.add(tmp);
-                    break;
+                    i = MAX_ROW + 1;
                 } else {
-                    break;
+                    i = MAX_ROW + 1;
                 }
             }
         }
@@ -314,9 +303,9 @@ public class MovementHandler {
                     ret.add(tmp);
                 } else if(hold.team != team) {
                     ret.add(tmp);
-                    break;
+                    i = MAX_ROW + 1;
                 } else {
-                    break;
+                    i = MAX_ROW + 1;
                 }
             }
         } 
