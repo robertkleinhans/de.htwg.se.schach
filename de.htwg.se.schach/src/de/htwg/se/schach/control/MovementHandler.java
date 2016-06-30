@@ -329,9 +329,9 @@ public class MovementHandler {
                     ret.add(tmp);
                 } else if(hold.team != team) {
                     ret.add(tmp);
-                    break;
+                    i = MAX_COLUMN + 1;
                 } else {
-                    break;
+                    i = MAX_COLUMN + 1;
                 }
             }
         }
@@ -347,9 +347,9 @@ public class MovementHandler {
                     ret.add(tmp);
                 } else if(hold.team != team) {
                     ret.add(tmp);
-                    break;
+                    i = MAX_COLUMN + 1;
                 } else {
-                    break;
+                    i = MAX_COLUMN + 1;
                 }
             }
         }
@@ -364,9 +364,9 @@ public class MovementHandler {
                     ret.add(tmp);
                 } else if(hold.team != team) {
                     ret.add(tmp);
-                    break;
+                    i = MAX_COLUMN + 1;
                 } else {
-                    break;
+                    i = MAX_COLUMN + 1;
                 }
             }
         }
@@ -382,9 +382,9 @@ public class MovementHandler {
                     ret.add(tmp);
                 } else if(hold.team != team) {
                     ret.add(tmp);
-                    break;
+                    i = MAX_COLUMN + 1;
                 } else {
-                    break;
+                    i = MAX_COLUMN + 1;
                 }
             }
         }
