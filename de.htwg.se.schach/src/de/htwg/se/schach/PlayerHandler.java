@@ -8,6 +8,9 @@ package de.htwg.se.schach;
 
 
 import de.htwg.se.schach.view.*;
+
+import java.awt.Point;
+
 import de.htwg.se.schach.control.MovementHandler;
 import de.htwg.se.schach.control.Position;
 /**
@@ -107,6 +110,7 @@ public class PlayerHandler {
         
         Position end = new Position(row_end, col_end);
         if(view.movePiece(start, end, team)) {
+        	gui.move_piece(new Point(col_start,row_start), new Point(col_end,row_end));
             return true;
         } else {
             System.out.println(">>> Unknown Error : Could not make the move!");
@@ -127,6 +131,7 @@ public class PlayerHandler {
         String com;
         
         this.gui = new GuiChess(sig);
+        gui.initialize_pieces(this.mov.getField());
         TuiInput tui = new TuiInput(sig);
         tui.start();
         gui.show();
@@ -136,13 +141,22 @@ public class PlayerHandler {
         System.out.println(">>> Game started:");
         
         while (!quit_flag) {
+        	if(mov.checkWin() != -1) {
+        		System.out.println("[MATCH END]");
+        		System.out.printf("PLAYER %d WON!\n", mov.checkWin());
+        		gui.quit();
+        		System.out.println(">>> Closing now!");
+        		System.exit(0);
+        	}
+        	
+        	
             System.out.printf(">>>[Player%d]: ",turn);
             
             while(!sig.input_given()) {
             	// busy waiting
             }
             com = sig.get_command();
-            
+            System.out.printf("\n");
             if(com.equals("quit")) {
             	gui.quit();
             	System.out.println(">>> Closing now!");

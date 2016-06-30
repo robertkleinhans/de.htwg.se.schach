@@ -69,17 +69,17 @@ public class GuiChess {
             
             for(int j = 0; j <= MAX_COLUMN; j++) {
             	
-                Position tmp = new Position(i,j);
+            	Position tmp = new Position(i,j);
                 
                 if(figures.containsKey(tmp)) {
                 	Piece tmp_piece = figures.get(tmp);
                 	if (tmp_piece.team == 0) {
-                		sb.append("img/white");
-                	} else {
                 		sb.append("img/black");
+                	} else {
+                		sb.append("img/white");
                 	}
                 	
-                	tmp_point = new Point(tmp_piece.column, tmp_piece.row);
+                	tmp_point = new Point((tmp_piece.column*80), (tmp_piece.row*80));
                 	
                 	switch(tmp_piece.cut) {
                 	
@@ -154,31 +154,23 @@ public class GuiChess {
         
         JLabel tmp = new JLabel(icon);
         tmp.setLocation(x,y);
-        tmp.setSize(81,81);
+        tmp.setSize(80,80);
         
        
         int counter = 0;
-        while (true) {
-            if (x-80 <= 0) {
-            	x = counter+1;
-                break;
-            } else {
-                x -= 80;
-                counter++;
-            }
+        while (x >= 80) {
+        	x-=80;
+        	counter++;
         }
+        x = counter;
         
         counter = 0;
-        while (true) {
-            if (y-80 <= 0) {
-            	y = counter+1;
-                break;
-            } else {
-                y -= 80;
-                counter ++;
-            }
+        while (y >= 80) {
+        	y-=80;
+        	counter++;
         }
-        
+        y = counter;
+        System.out.println(new Point(x,y));
         board_brain.put(new Point(x,y), tmp);
         
         chess_frame.add(tmp);
@@ -191,6 +183,19 @@ public class GuiChess {
     public void remove_piece(int x, int y) {
     	Point tmp = new Point(x,y);
     	board_brain.remove(tmp);
+    }
+    
+    public void move_piece(Point start, Point end) {
+    	JLabel tmp = board_brain.remove(start);
+
+    	if(board_brain.containsKey(end)) {
+    		JLabel todo = board_brain.remove(end);
+    		chess_frame.remove(todo);
+    	}
+    	tmp.setLocation(new Point(end.x*80,end.y*80));
+    	board_brain.put(end, tmp);
+    	chess_frame.validate();
+    	chess_frame.repaint();
     }
     
     public void quit() {
