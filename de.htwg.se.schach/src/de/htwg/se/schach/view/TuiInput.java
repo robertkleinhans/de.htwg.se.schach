@@ -18,7 +18,7 @@ public class TuiInput extends Thread {
 			try{
 				holder = scan.nextLine();
 				this.sig.set_input(holder);
-				if(holder.equals("quit")) {
+				if(("quit").equals(holder)) {
 					break;
 				}
 			} catch(NoSuchElementException e) {

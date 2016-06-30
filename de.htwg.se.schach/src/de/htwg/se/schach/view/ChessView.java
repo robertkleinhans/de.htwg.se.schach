@@ -16,8 +16,8 @@ import de.htwg.se.schach.control.*;
  * @author rob
  */
 public class ChessView {
-    private final int MAX_COLUMN = 7;
-    private final int MAX_ROW = 7;  
+    private final int MAXCOLUMN = 7;
+    private final int MAXROW = 7;  
     
     private MovementHandler movH;
     
@@ -35,30 +35,30 @@ public class ChessView {
     
     public void viewMovement(Position pos) {
         List<Position> ret = new LinkedList<Position>();
-        Map<Position,Piece> figure_holder = movH.getField();
+        Map<Position,Piece> figureHolder = movH.getField();
 
         ret = movH.getMovement(pos);
         
         System.out.printf("|__||_A_||_B_||_C_||_D_||_E_||_F_||_G_||_H_|%n");
         
-        for (int i= 0; i <= MAX_ROW; i++) {
+        for (int i= 0; i <= MAXROW; i++) {
             
             System.out.printf("|%d_|",i+1);
             
-            for (int j=0; j <= MAX_COLUMN; j++) {
+            for (int j=0; j <= MAXCOLUMN; j++) {
                 Position tmp = new Position(i,j);
                 
                 if(ret.contains(tmp)) {
                     System.out.printf(">");
-                    if(figure_holder.containsKey(tmp)) {
-                        System.out.printf("%d%s",figure_holder.get(tmp).getTeam(),figure_holder.get(tmp).getName());
+                    if(figureHolder.containsKey(tmp)) {
+                        System.out.printf("%d%s",figureHolder.get(tmp).getTeam(),figureHolder.get(tmp).getName());
                     } else {
                         System.out.printf("---");
                     }
                     System.out.printf("<");
                 } else {
-                    if(figure_holder.containsKey(tmp)) {
-                        System.out.printf("[%d%s]",figure_holder.get(tmp).getTeam(),figure_holder.get(tmp).getName());
+                    if(figureHolder.containsKey(tmp)) {
+                        System.out.printf("[%d%s]",figureHolder.get(tmp).getTeam(),figureHolder.get(tmp).getName());
                     } else {
                         System.out.printf("[---]");
                     }
@@ -70,16 +70,16 @@ public class ChessView {
     }
     
     public void printField() {
-        Map<Position,Piece> figure_holder = movH.getField();
+        Map<Position,Piece> figureHolder = movH.getField();
         
         System.out.printf("|__||_A_||_B_||_C_||_D_||_E_||_F_||_G_||_H_|%n");
         
-        for(int i = 0; i <= MAX_ROW; i++) {
+        for(int i = 0; i <= MAXROW; i++) {
             System.out.printf("|%d_|",i+1);
-            for(int j = 0; j <= MAX_COLUMN; j++) {
+            for(int j = 0; j <= MAXCOLUMN; j++) {
                 Position tmp = new Position(i,j);
-                if(figure_holder.containsKey(tmp)) {
-                    System.out.printf("[%d%s]",figure_holder.get(tmp).getTeam(),figure_holder.get(tmp).getName());
+                if(figureHolder.containsKey(tmp)) {
+                    System.out.printf("[%d%s]",figureHolder.get(tmp).getTeam(),figureHolder.get(tmp).getName());
                 } else {
                     System.out.printf("[---]");
                 }

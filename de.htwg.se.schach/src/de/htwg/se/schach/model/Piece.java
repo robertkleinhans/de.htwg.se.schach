@@ -2,8 +2,8 @@ package de.htwg.se.schach.model;
 
 
 public abstract class Piece {
-    final int MAX_ROW = 7;
-    final int MAX_COLUMN = 7;
+    final int MAXROW = 7;
+    final int MAXCOLUMN = 7;
     private int row;
     private int column;
     private String cut;
