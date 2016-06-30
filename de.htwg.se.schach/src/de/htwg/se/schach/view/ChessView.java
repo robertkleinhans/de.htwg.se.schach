@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import de.htwg.se.schach.model.Piece;
 import de.htwg.se.schach.control.*;
+import org.apache.log4j.Logger;
 /**
  *
  * @author rob
@@ -18,6 +19,8 @@ import de.htwg.se.schach.control.*;
 public class ChessView {
     private final int MAXCOLUMN = 7;
     private final int MAXROW = 7;  
+    
+    private static final Logger LOGGER = Logger.getLogger("de.htwg.se.schach.chessView");
     
     private MovementHandler movH;
     
@@ -36,56 +39,92 @@ public class ChessView {
     public void viewMovement(Position pos) {
         List<Position> ret = new LinkedList<Position>();
         Map<Position,Piece> figureHolder = movH.getField();
-
         ret = movH.getMovement(pos);
+        StringBuilder sb = new StringBuilder();
         
-        System.out.printf("|__||_A_||_B_||_C_||_D_||_E_||_F_||_G_||_H_|%n");
+        sb.append("|__||_A_||_B_||_C_||_D_||_E_||_F_||_G_||_H_|");
+        LOGGER.info(sb.toString());
+        sb.setLength(0);
+        //System.out.printf("|__||_A_||_B_||_C_||_D_||_E_||_F_||_G_||_H_|%n");
         
         for (int i= 0; i <= MAXROW; i++) {
-            
-            System.out.printf("|%d_|",i+1);
+
+        	sb.append("|").append(String.valueOf(i+1)).append("_|");
+
+            //System.out.printf("|%d_|",i+1);
             
             for (int j=0; j <= MAXCOLUMN; j++) {
                 Position tmp = new Position(i,j);
                 
                 if(ret.contains(tmp)) {
-                    System.out.printf(">");
+                	sb.append(">");
+
+                    //System.out.printf(">");
                     if(figureHolder.containsKey(tmp)) {
-                        System.out.printf("%d%s",figureHolder.get(tmp).getTeam(),figureHolder.get(tmp).getName());
+                    	
+                    	sb.append(String.valueOf(figureHolder.get(tmp).getTeam())).append(figureHolder.get(tmp).getName());
+                        
+                    	//System.out.printf("%d%s",figureHolder.get(tmp).getTeam(),figureHolder.get(tmp).getName());
                     } else {
-                        System.out.printf("---");
+                    	sb.append("---");
+
+                        //System.out.printf("---");
                     }
-                    System.out.printf("<");
+                    sb.append("<");
+
+                    //System.out.printf("<");
                 } else {
                     if(figureHolder.containsKey(tmp)) {
-                        System.out.printf("[%d%s]",figureHolder.get(tmp).getTeam(),figureHolder.get(tmp).getName());
+                    	
+                    	sb.append("[").append(String.valueOf(figureHolder.get(tmp).getTeam())).append(figureHolder.get(tmp).getName()).append("]");
+
+                    	//System.out.printf("[%d%s]",figureHolder.get(tmp).getTeam(),figureHolder.get(tmp).getName());
                     } else {
-                        System.out.printf("[---]");
+                    	sb.append("---");
+
+                        //System.out.printf("[---]");
                     }
                 }
             }
-            System.out.printf("%n");
+            LOGGER.info(sb.toString());
+            sb.setLength(0);
+            //System.out.printf("%n");
         }
-        System.out.printf("%n%n");
+        LOGGER.info(sb.toString());
+        //System.out.printf("%n%n");
     }
     
     public void printField() {
         Map<Position,Piece> figureHolder = movH.getField();
+        StringBuilder sb = new StringBuilder();
         
-        System.out.printf("|__||_A_||_B_||_C_||_D_||_E_||_F_||_G_||_H_|%n");
+        sb.append("|__||_A_||_B_||_C_||_D_||_E_||_F_||_G_||_H_|");
+        LOGGER.info(sb.toString());
+        sb.setLength(0);
+        //System.out.printf("|__||_A_||_B_||_C_||_D_||_E_||_F_||_G_||_H_|%n");
         
         for(int i = 0; i <= MAXROW; i++) {
-            System.out.printf("|%d_|",i+1);
+            //System.out.printf("|%d_|",i+1);
+            
+        	sb.append("|").append(String.valueOf(i+1)).append("_|");
+            
             for(int j = 0; j <= MAXCOLUMN; j++) {
                 Position tmp = new Position(i,j);
                 if(figureHolder.containsKey(tmp)) {
-                    System.out.printf("[%d%s]",figureHolder.get(tmp).getTeam(),figureHolder.get(tmp).getName());
+                	
+                	sb.append("[").append(String.valueOf(figureHolder.get(tmp).getTeam())).append(figureHolder.get(tmp).getName()).append("]");
+                    
+                    //System.out.printf("[%d%s]",figureHolder.get(tmp).getTeam(),figureHolder.get(tmp).getName());
                 } else {
-                    System.out.printf("[---]");
+                	sb.append("[---]");
+                    //System.out.printf("[---]");
                 }
             }
-            System.out.printf("%n");
+            LOGGER.info(sb.toString());
+            sb.setLength(0);
+            //System.out.printf("%n");
         }
-        System.out.printf("%n");
+        LOGGER.info(sb.toString());
+        //System.out.printf("%n");
     }
 }
