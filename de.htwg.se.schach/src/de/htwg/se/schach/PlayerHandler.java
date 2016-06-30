@@ -143,10 +143,10 @@ public class PlayerHandler {
         while (!quit_flag) {
         	if(mov.checkWin() != -1) {
         		System.out.println("[MATCH END]");
-        		System.out.printf("PLAYER %d WON!\n", mov.checkWin());
+        		System.out.printf("PLAYER %d WON!%n", mov.checkWin());
         		gui.quit();
         		System.out.println(">>> Closing now!");
-        		System.exit(0);
+        		break;
         	}
         	
         	
@@ -156,11 +156,11 @@ public class PlayerHandler {
             	// busy waiting
             }
             com = sig.get_command();
-            System.out.printf("\n");
+            System.out.printf("%n");
             if(com.equals("quit")) {
             	gui.quit();
             	System.out.println(">>> Closing now!");
-            	System.exit(0);
+            	break;
             }
             
             if(handleInput(com,turn)) {
