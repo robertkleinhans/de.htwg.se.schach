@@ -30,6 +30,7 @@ public class GuiBoard extends JPanel {
 			}
 		}
 	}
+
 	
 	@Override
 	public Dimension getPreferredSize() {
