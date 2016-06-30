@@ -110,6 +110,10 @@ public class PlayerHandler {
         	return false;
         }
         
+        if(("quit").equals(inp)) {
+        	return true;
+        }
+        
         String[] parts = inp.split("-");
 
         int colStart = ((int) parts[0].charAt(0)) - 65;
