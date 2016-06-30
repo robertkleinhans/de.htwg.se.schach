@@ -66,9 +66,7 @@ public class PlayerHandler {
     }
     
     boolean preCheck(String inp) {
-    	if (("quit").equals(inp)) {
-            return true;
-        } else if (inp.startsWith("show")) {
+    	if (inp.startsWith("show")) {
             handleShow(inp);
             return false;
         }
@@ -82,18 +80,11 @@ public class PlayerHandler {
         	LOGGER.info(invalid);
             return false;
         }
-
-        int colStart = ((int) parts[0].charAt(0)) - 65;
-
-        int rowStart = (int) parts[0].charAt(1) - 49;
-        
-        if(!checkNumbers(colStart,rowStart)) {
-        	return false;
-        }
         return true;
     }
     
     boolean checkNumbers(int valA, int valB) {
+    	
     	if(!checkValue(valA)) {
         	LOGGER.info(colError);
             return false;
@@ -104,22 +95,36 @@ public class PlayerHandler {
     	return true;
     }
     
+    boolean moveHelper(Position start, Position end, int team, int colStart, int rowStart,
+    		int colEnd, int rowEnd) {
+    	if(view.movePiece(start, end, team)) {
+        	gui.movePiece(new Point(colStart,rowStart), new Point(colEnd,rowEnd));
+            return true;
+        } else {
+        	LOGGER.info(">>> Unknown Error : Could not make the move!");
+            return false;
+        }
+    }
+    
     public boolean handleInput(String inp,int team) {
+    	
+    	if(("quit").equals(inp)) {
+        	return true;
+        }
     	
         if(!preCheck(inp)) {
         	return false;
-        }
-        
-        if(("quit").equals(inp)) {
-        	return true;
-        }
+        }      
         
         String[] parts = inp.split("-");
 
         int colStart = ((int) parts[0].charAt(0)) - 65;
 
         int rowStart = (int) parts[0].charAt(1) - 49;
-       
+        if(!checkNumbers(colStart,rowStart)) {
+        	return false;
+        }
+        
         Position start = new Position(rowStart, colStart);
         if(!view.checkPiece(start, team)) {
             LOGGER.info(">>> None of your Pieces are on this position!");
@@ -136,13 +141,7 @@ public class PlayerHandler {
         }
         
         Position end = new Position(rowEnd, colEnd);
-        if(view.movePiece(start, end, team)) {
-        	gui.movePiece(new Point(colStart,rowStart), new Point(colEnd,rowEnd));
-            return true;
-        } else {
-        	LOGGER.info(">>> Unknown Error : Could not make the move!");
-            return false;
-        }
+        return moveHelper(start,end,team,colStart,rowStart,colEnd,rowEnd);
     }
     
     public boolean checkValue(int val) {
