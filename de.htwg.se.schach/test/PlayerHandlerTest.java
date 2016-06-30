@@ -12,6 +12,7 @@ public class PlayerHandlerTest {
 	@Test
 	public void testHandleInput() {
 		PlayerHandler pl = new PlayerHandler();
+		
 		assertFalse(pl.handleInput("show A7", 1));
 		assertFalse(pl.handleInput("show A2", 0));
 		
@@ -22,14 +23,14 @@ public class PlayerHandlerTest {
 		assertFalse(pl.handleInput("te-test", 1));
 		assertFalse(pl.handleInput("te-te", 1));
 		
+		
 		assertFalse(pl.handleInput("A9-B9", 1));
 		assertFalse(pl.handleInput("A6-B9", 1));
-		
-		assertTrue(pl.handleInput("A7-A5", 1));
 		
 		assertFalse(pl.handleInput("A2-I9", 0));
 		assertFalse(pl.handleInput("A2-B6", 0));
 		assertFalse(pl.handleInput("A2-B9", 0));
+		
 		assertTrue(pl.handleInput("quit", 1));
 		
 	}

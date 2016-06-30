@@ -4,15 +4,12 @@ import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import de.htwg.se.schach.control.MovementHandler;
 import de.htwg.se.schach.control.Position;
 import de.htwg.se.schach.model.Piece;
 
@@ -170,7 +167,7 @@ public class GuiChess {
         	counter++;
         }
         y = counter;
-        System.out.println(new Point(x,y));
+
         board_brain.put(new Point(x,y), tmp);
         
         chess_frame.add(tmp);
@@ -180,11 +177,7 @@ public class GuiChess {
     	chess_frame.setVisible(true);
     }
     
-    public void remove_piece(int x, int y) {
-    	Point tmp = new Point(x,y);
-    	board_brain.remove(tmp);
-    }
-    
+
     public void move_piece(Point start, Point end) {
     	JLabel tmp = board_brain.remove(start);
 
