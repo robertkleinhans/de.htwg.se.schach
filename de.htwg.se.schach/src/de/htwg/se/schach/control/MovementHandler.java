@@ -183,7 +183,7 @@ public class MovementHandler {
 		return ret;
 	}
 
-	List<Position> kingHelper(Position pos, int team, int varOne) {
+	List<Position> kingHelper(Position pos, int varOne) {
 		List<Position> ret = new LinkedList<Position>();
 		int row = pos.getRow();
 		int col = pos.getColumn();
@@ -212,7 +212,7 @@ public class MovementHandler {
 
 		List<Position> retClean = new LinkedList<Position>();
 		
-		ret.addAll(kingHelper(pos,team,1));
+		ret.addAll(kingHelper(pos,1));
 		if (row - 1 >= 0) {
 			ret.add(new Position(row - 1, col));
 			if (col + 1 < 8) {
@@ -337,8 +337,6 @@ public class MovementHandler {
 		return ret;
 	}
 	private List<Position> getDiagonalMovement(Position pos) {
-		int row = pos.getRow();
-		int col = pos.getColumn();
 		int team = figureHolder.get(pos).getTeam();
 		List<Position> ret = new LinkedList<Position>();
 		
@@ -352,13 +350,14 @@ public class MovementHandler {
 		return ret;
 	}
 
-	private List<Position> getHorVerMovement(Position pos) {
-		int row = pos.getRow();
+	
+	
+	
+	List<Position> getRight(Position pos,int team) {
 		int col = pos.getColumn();
-		int team = figureHolder.get(pos).getTeam();
+		int row = pos.getRow();
 		List<Position> ret = new LinkedList<Position>();
-
-		// Right
+	
 		for (int i = 1; i <= MAXCOLUMN; i++) {
 			if (col + i <= MAXCOLUMN) {
 				Position tmp = new Position(row, col + i);
@@ -369,14 +368,20 @@ public class MovementHandler {
 					ret.add(tmp);
 				} else if (hold.getTeam() != team) {
 					ret.add(tmp);
-					break;
+					return ret;
 				} else {
-					break;
+					return ret;
 				}
 			}
 		}
-
-		// Left
+		return ret;
+	}
+	
+	List<Position> getLeft(Position pos,int team) {
+		int col = pos.getColumn();
+		int row = pos.getRow();
+		List<Position> ret = new LinkedList<Position>();
+	
 		for (int i = 1; i <= MAXCOLUMN; i++) {
 			if (col - i >= 0) {
 				Position tmp = new Position(row, col - i);
@@ -387,31 +392,44 @@ public class MovementHandler {
 					ret.add(tmp);
 				} else if (hold.getTeam() != team) {
 					ret.add(tmp);
-					break;
+					return ret;
 				} else {
-					break;
+					return ret;
 				}
 			}
 		}
-
-		// up
+		return ret;
+	}
+	
+	List<Position> getUp(Position pos,int team) {
+		int col = pos.getColumn();
+		int row = pos.getRow();
+		List<Position> ret = new LinkedList<Position>();
+	
 		for (int i = 1; i <= MAXROW; i++) {
 			if (row - i >= 0) {
 				Position tmp = new Position(row - i, col);
 
 				Piece hold = figureHolder.get(tmp);
+
 				if (hold == null) {
 					ret.add(tmp);
 				} else if (hold.getTeam() != team) {
 					ret.add(tmp);
-					break;
+					return ret;
 				} else {
-					break;
+					return ret;
 				}
 			}
 		}
-
-		// down
+		return ret;
+	}
+	
+	List<Position> getDown(Position pos,int team) {
+		int col = pos.getColumn();
+		int row = pos.getRow();
+		List<Position> ret = new LinkedList<Position>();
+	
 		for (int i = 1; i <= MAXROW; i++) {
 			if (row + i <= MAXROW) {
 				Position tmp = new Position(row + i, col);
@@ -422,12 +440,23 @@ public class MovementHandler {
 					ret.add(tmp);
 				} else if (hold.getTeam() != team) {
 					ret.add(tmp);
-					break;
+					return ret;
 				} else {
-					break;
+					return ret;
 				}
 			}
 		}
+		return ret;
+	}
+	
+	private List<Position> getHorVerMovement(Position pos) {
+		int team = figureHolder.get(pos).getTeam();
+		List<Position> ret = new LinkedList<Position>();
+
+		ret.addAll(getRight(pos,team));
+		ret.addAll(getLeft(pos,team));
+		ret.addAll(getUp(pos,team));
+		ret.addAll(getDown(pos,team));
 
 		return ret;
 	}
