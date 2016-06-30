@@ -134,6 +134,7 @@ public class PlayerHandler {
         int turn = 1;
         Signal sig = new Signal();
         String com;
+        Boolean quitFlag = false;
         
         StringBuilder sb = new StringBuilder();
         
@@ -147,18 +148,8 @@ public class PlayerHandler {
         LOGGER.info("HINT: To see aviable moves: show D7");
         LOGGER.info(">>> Game started:");
 
-        while (true) {
-        	if(mov.checkWin() != -1) {
-        		LOGGER.info("[MATCH END]");
-        		sb.setLength(0);
-        		sb.append("PLAYER ").append(String.valueOf(mov.checkWin())).append(" WON!%n");
-        		LOGGER.info(sb.toString());
-        		LOGGER.info(">>> Closing now!");
-        		gui.quit();
-        		
-
-        		break;
-        	}
+        while (!quitFlag) {
+        	
         	
         	sb.setLength(0);
         	sb.append(">>>[Player").append(String.valueOf(turn)).append("]: ");
@@ -172,12 +163,7 @@ public class PlayerHandler {
             
             LOGGER.info(com);
 
-            if(("quit").equals(com)) {
-            	gui.quit();
-            	LOGGER.info(">>> Closing now!");
-
-            	break;
-            }
+            
             
             if(handleInput(com,turn)) {
                 view.printField();
@@ -185,6 +171,24 @@ public class PlayerHandler {
 	                
 	        }
             sig.reset();
+            
+            if(mov.checkWin() != -1) {
+        		LOGGER.info("[MATCH END]");
+        		sb.setLength(0);
+        		sb.append("PLAYER ").append(String.valueOf(mov.checkWin())).append(" WON!%n");
+        		LOGGER.info(sb.toString());
+        		LOGGER.info(">>> Closing now!");
+        		gui.quit();
+        		
+
+        		quitFlag = true;
+        	}
+            if(("quit").equals(com)) {
+            	gui.quit();
+            	LOGGER.info(">>> Closing now!");
+
+            	quitFlag = true;
+            }
         }
         
     }

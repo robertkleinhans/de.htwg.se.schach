@@ -77,7 +77,7 @@ public class ChessView {
 
                     	
                     } else {
-                    	sb.append("---");
+                    	sb.append("[---]");
 
                      
                     }

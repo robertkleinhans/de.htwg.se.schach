@@ -17,13 +17,13 @@ import de.htwg.se.schach.model.*;
  * @author rob
  */
 public class MovementHandler {
-	private final static int MAXCOLUMN = 7;
-	private final static int MAXROW = 7;
+	private static final  int maxCOLUMN = 7;
+	private static final  int maxROW = 7;
 	private Map<Position, Piece> figureHolder;
 
 	public MovementHandler() {
 		figureHolder = new HashMap<Position, Piece>();
-		for (int i = 0; i <= MAXCOLUMN; i++) {
+		for (int i = 0; i <= maxCOLUMN; i++) {
 			figureHolder.put(new Position(1, i), new Pawn(1, i, 1, 0));
 			figureHolder.put(new Position(6, i), new Pawn(6, i, -1, 1));
 
@@ -148,7 +148,7 @@ public class MovementHandler {
 		Pawn pawn = (Pawn) figureHolder.get(pos);
 		List<Position> ret = new LinkedList<Position>();
 
-		if (row + pawn.getDirection() >= 0 && row + pawn.getDirection() <= MAXROW) {
+		if (row + pawn.getDirection() >= 0 && row + pawn.getDirection() <= maxROW) {
 			Position tmp = new Position(row + pawn.getDirection(), col);
 
 			Piece hold = figureHolder.get(tmp);
@@ -233,7 +233,7 @@ public class MovementHandler {
 		int team = figureHolder.get(pos).getTeam();
 		List<Position> ret = new LinkedList<Position>();
 		// Left-upper
-		for (int i = 1; i <= MAXROW; i++) {
+		for (int i = 1; i <= maxROW; i++) {
 			if (row - i >= 0 && col - i >= 0) {
 				Position tmp = new Position(row - i, col - i);
 
@@ -251,8 +251,8 @@ public class MovementHandler {
 		}
 
 		// Right-upper
-		for (int i = 1; i <= MAXROW; i++) {
-			if (row - i >= 0 && col + i <= MAXCOLUMN) {
+		for (int i = 1; i <= maxROW; i++) {
+			if (row - i >= 0 && col + i <= maxCOLUMN) {
 				Position tmp = new Position(row - i, col + i);
 
 				Piece hold = figureHolder.get(tmp);
@@ -269,8 +269,8 @@ public class MovementHandler {
 		}
 
 		// Left-lower
-		for (int i = 1; i <= MAXROW; i++) {
-			if (row + i <= MAXROW && col - i >= 0) {
+		for (int i = 1; i <= maxROW; i++) {
+			if (row + i <= maxROW && col - i >= 0) {
 				Position tmp = new Position(row + i, col - i);
 
 				Piece hold = figureHolder.get(tmp);
@@ -287,8 +287,8 @@ public class MovementHandler {
 		}
 
 		// Right-lower
-		for (int i = 1; i <= MAXROW; i++) {
-			if (row + i <= MAXROW && col + i <= MAXCOLUMN) {
+		for (int i = 1; i <= maxROW; i++) {
+			if (row + i <= maxROW && col + i <= maxCOLUMN) {
 				Position tmp = new Position(row + i, col + i);
 
 				Piece hold = figureHolder.get(tmp);
@@ -313,8 +313,8 @@ public class MovementHandler {
 		List<Position> ret = new LinkedList<Position>();
 
 		// Right
-		for (int i = 1; i <= MAXCOLUMN; i++) {
-			if (col + i <= MAXCOLUMN) {
+		for (int i = 1; i <= maxCOLUMN; i++) {
+			if (col + i <= maxCOLUMN) {
 				Position tmp = new Position(row, col + i);
 
 				Piece hold = figureHolder.get(tmp);
@@ -331,7 +331,7 @@ public class MovementHandler {
 		}
 
 		// Left
-		for (int i = 1; i <= MAXCOLUMN; i++) {
+		for (int i = 1; i <= maxCOLUMN; i++) {
 			if (col - i >= 0) {
 				Position tmp = new Position(row, col - i);
 
@@ -349,7 +349,7 @@ public class MovementHandler {
 		}
 
 		// up
-		for (int i = 1; i <= MAXROW; i++) {
+		for (int i = 1; i <= maxROW; i++) {
 			if (row - i >= 0) {
 				Position tmp = new Position(row - i, col);
 
@@ -366,8 +366,8 @@ public class MovementHandler {
 		}
 
 		// down
-		for (int i = 1; i <= MAXROW; i++) {
-			if (row + i <= MAXROW) {
+		for (int i = 1; i <= maxROW; i++) {
+			if (row + i <= maxROW) {
 				Position tmp = new Position(row + i, col);
 
 				Piece hold = figureHolder.get(tmp);
@@ -386,85 +386,45 @@ public class MovementHandler {
 		return ret;
 	}
 
-	private List<Position> getKnightMovement(Position pos) {
+	
+	private List<Position> knightHelper(Position pos, int team, int varOne, int varTwo) {
 		int row = pos.getRow();
 		int col = pos.getColumn();
+		List<Position> ret = new LinkedList<Position>();
+		
+		if(row + varOne <= maxROW) {
+			if (col - varTwo >= 0) {
+				Position tmp = new Position(row + varOne, col - varTwo);
+				Piece hold = figureHolder.get(tmp);
+
+				if (hold == null || hold.getTeam() != team) {
+					ret.add(tmp);
+				}
+			}
+			if (col + varTwo <= maxCOLUMN) {
+				Position tmp = new Position(row + varOne, col + varTwo);
+				Piece hold = figureHolder.get(tmp);
+
+				if (hold == null || hold.getTeam() != team) {
+					ret.add(tmp);
+				}
+			}
+		}
+	
+		return ret;
+	}
+	
+	private List<Position> getKnightMovement(Position pos) {
 		int team = figureHolder.get(pos).getTeam();
 		List<Position> ret = new LinkedList<Position>();
+		
+		ret.addAll(knightHelper(pos,team,2,1));
 
-		if (row + 2 <= MAXROW) {
-			if (col - 1 >= 0) {
-				Position tmp = new Position(row + 2, col - 1);
-				Piece hold = figureHolder.get(tmp);
+		ret.addAll(knightHelper(pos,team,1,2));
 
-				if (hold == null || hold.getTeam() != team) {
-					ret.add(tmp);
-				}
+		ret.addAll(knightHelper(pos,team,-2,1));
 
-			}
-			if (col + 1 <= MAXCOLUMN) {
-				Position tmp = new Position(row + 2, col + 1);
-				Piece hold = figureHolder.get(tmp);
-
-				if (hold == null || hold.getTeam() != team) {
-					ret.add(tmp);
-				}
-			}
-		}
-		if (row + 1 <= MAXROW) {
-			if (col - 2 >= 0) {
-				Position tmp = new Position(row + 1, col - 2);
-				Piece hold = figureHolder.get(tmp);
-
-				if (hold == null || hold.getTeam() != team) {
-					ret.add(tmp);
-				}
-			}
-			if (col + 2 <= MAXCOLUMN) {
-				Position tmp = new Position(row + 1, col + 2);
-				Piece hold = figureHolder.get(tmp);
-
-				if (hold == null || hold.getTeam() != team) {
-					ret.add(tmp);
-				}
-			}
-		}
-		if (row - 2 >= 0) {
-			if (col - 1 >= 0) {
-				Position tmp = new Position(row - 2, col - 1);
-				Piece hold = figureHolder.get(tmp);
-
-				if (hold == null || hold.getTeam() != team) {
-					ret.add(tmp);
-				}
-			}
-			if (col + 1 <= MAXCOLUMN) {
-				Position tmp = new Position(row - 2, col + 1);
-				Piece hold = figureHolder.get(tmp);
-
-				if (hold == null || hold.getTeam() != team) {
-					ret.add(tmp);
-				}
-			}
-		}
-		if (row - 1 >= 0) {
-			if (col - 2 >= 0) {
-				Position tmp = new Position(row - 1, col - 2);
-				Piece hold = figureHolder.get(tmp);
-
-				if (hold == null || hold.getTeam() != team) {
-					ret.add(tmp);
-				}
-			}
-			if (col + 2 <= MAXCOLUMN) {
-				Position tmp = new Position(row - 1, col + 2);
-				Piece hold = figureHolder.get(tmp);
-
-				if (hold == null || hold.getTeam() != team) {
-					ret.add(tmp);
-				}
-			}
-		}
+		ret.addAll(knightHelper(pos,team,-1,2));
 
 		return ret;
 	}
