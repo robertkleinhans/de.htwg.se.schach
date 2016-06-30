@@ -46,10 +46,10 @@ public class PlayerHandlerTest {
 	@Test
 	public void testHandleShow() {
 		PlayerHandler pl = new PlayerHandler();
-		pl.handleShow("test", 0);
-		pl.handleShow("show A2", 0);
-		pl.handleShow("show N2", 0);
-		pl.handleShow("show A9", 0);
+		pl.handleShow("test");
+		pl.handleShow("show A2");
+		pl.handleShow("show N2");
+		pl.handleShow("show A9");
 	}
 	
 }

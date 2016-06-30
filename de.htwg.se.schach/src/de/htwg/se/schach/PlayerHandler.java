@@ -21,6 +21,9 @@ public class PlayerHandler {
     private ChessView view;
     private GuiChess gui;
     private MovementHandler mov;
+    String invalid = ">>> Invalid command!";
+    String colError = ">>> The column must be between A and H!";
+    String rowError = ">>> The row must be between 0 and 7!";
     
     
     public PlayerHandler() {
@@ -34,26 +37,26 @@ public class PlayerHandler {
         gameHandler();
     }
     
-    public void handleShow(String inp, int team) {
+    public void handleShow(String inp) {
         String[] parts = inp.split(" ");
         if (parts.length != 2) {
-            System.out.println(">>> Invalid command!");
+            System.out.println(invalid);
             return;
         }
 
         // - 65 to map A to 0, B to 1, ...
-        int col_start = ((int) parts[1].charAt(0)) - 65;
+        int colStart = ((int) parts[1].charAt(0)) - 65;
         // - 49 to map '1' to 0, '2' to 1, ...
-        int row_start = (int) parts[1].charAt(1) - 49;
+        int rowStart = (int) parts[1].charAt(1) - 49;
         
-        if(!checkValue(col_start)) {
-            System.out.println(">>> The column must be between A and H!");
+        if(!checkValue(colStart)) {
+            System.out.println(colError);
             return;
-        } else if (!checkValue(row_start)) {
-            System.out.println(">>> The row must be between 0 and 7!");
+        } else if (!checkValue(rowStart)) {
+            System.out.println(rowError);
             return;
         }
-        Position start = new Position(row_start, col_start);
+        Position start = new Position(rowStart, colStart);
         
         view.viewMovement(start);
         
@@ -61,56 +64,57 @@ public class PlayerHandler {
     }
     
     public boolean handleInput(String inp,int team) {
-        if (inp.equals("quit")) {
+    	
+        if (("quit").equals(inp)) {
             return true;
         } else if (inp.startsWith("show")) {
-            handleShow(inp,team);
+            handleShow(inp);
             return false;
         }
         
         String[] parts = inp.split("-");
         if (parts.length != 2) {
-            System.out.println(">>> Invalid command!");
+            System.out.println(invalid);
             return false;
         }
         if(parts[0].length() != 2 || parts[1].length() != 2) {
-            System.out.println(">>> Invalid command!");
+            System.out.println(invalid);
             return false;
         }
         // - 65 to map A to 0, B to 1, ...
-        int col_start = ((int) parts[0].charAt(0)) - 65;
+        int colStart = ((int) parts[0].charAt(0)) - 65;
         // - 49 to map '1' to 0, '2' to 1, ...
-        int row_start = (int) parts[0].charAt(1) - 49;
+        int rowStart = (int) parts[0].charAt(1) - 49;
         
-        if(!checkValue(col_start)) {
-            System.out.println(">>> The column must be between A and H!");
+        if(!checkValue(colStart)) {
+            System.out.println(colError);
             return false;
-        } else if (!checkValue(row_start)) {
-            System.out.println(">>> The row must be between 0 and 7!");
+        } else if (!checkValue(rowStart)) {
+            System.out.println(rowError);
             return false;
         }
-        Position start = new Position(row_start, col_start);
+        Position start = new Position(rowStart, colStart);
         if(!view.checkPiece(start, team)) {
             System.out.println(">>> None of your Pieces are on this position!");
             return false;
         }
         
         // - 65 to map A to 0, B to 1, ...
-        int col_end = ((int) parts[1].charAt(0)) - 65;
+        int colEnd = ((int) parts[1].charAt(0)) - 65;
         // - 49 to map '1' to 0, '2' to 1, ...
-        int row_end = (int) parts[1].charAt(1) - 49;
+        int rowEnd = (int) parts[1].charAt(1) - 49;
         
-        if(!checkValue(col_end)) {
-            System.out.println(">>> The column must be between A and H!");
+        if(!checkValue(colEnd)) {
+            System.out.println(colError);
             return false;
-        } else if (!checkValue(row_end)) {
-            System.out.println(">>> The row must be between 0 and 7!");
+        } else if (!checkValue(rowEnd)) {
+            System.out.println(rowError);
             return false;
         }
         
-        Position end = new Position(row_end, col_end);
+        Position end = new Position(rowEnd, colEnd);
         if(view.movePiece(start, end, team)) {
-        	gui.move_piece(new Point(col_start,row_start), new Point(col_end,row_end));
+        	gui.move_piece(new Point(colStart,rowStart), new Point(colEnd,rowEnd));
             return true;
         } else {
             System.out.println(">>> Unknown Error : Could not make the move!");
@@ -126,7 +130,6 @@ public class PlayerHandler {
     
     public void gameHandler() {
         int turn = 1;
-        boolean quit_flag = false;
         Signal sig = new Signal();
         String com;
         
@@ -140,7 +143,7 @@ public class PlayerHandler {
         System.out.println("HINT: To see aviable moves: show D7");
         System.out.println(">>> Game started:");
         
-        while (!quit_flag) {
+        while (true) {
         	if(mov.checkWin() != -1) {
         		System.out.println("[MATCH END]");
         		System.out.printf("PLAYER %d WON!%n", mov.checkWin());
@@ -157,7 +160,7 @@ public class PlayerHandler {
             }
             com = sig.get_command();
             System.out.printf("%n");
-            if(com.equals("quit")) {
+            if(("quit").equals(com)) {
             	gui.quit();
             	System.out.println(">>> Closing now!");
             	break;
