@@ -27,6 +27,8 @@ public class PlayerHandler {
     String invalid = ">>> Invalid command!";
     String colError = ">>> The column must be between A and H!";
     String rowError = ">>> The row must be between 0 and 7!";
+    Signal sig;
+    
     
     private static final Logger LOGGER = Logger.getLogger("de.htwg.se.schach.playerHandler");
     
@@ -34,11 +36,12 @@ public class PlayerHandler {
     	mov = new MovementHandler();
     	this.view = new ChessView(mov);
         view.printField();
+        sig = new Signal();
     }
     
     
     public void startGame() {
-        gameHandler();
+        gameHandler(this.sig);
     }
     
     public void handleShow(String inp) {
@@ -150,9 +153,9 @@ public class PlayerHandler {
     
     
     
-    public void gameHandler() {
+    public void gameHandler(Signal sig) {
         int turn = 1;
-        Signal sig = new Signal();
+        
         String com;
         Boolean quitFlag = false;
         

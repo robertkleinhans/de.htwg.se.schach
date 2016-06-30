@@ -7,12 +7,13 @@ import org.apache.log4j.Logger;
 
 public class TuiInput extends Thread {
 	Signal sig;
+	private static final Logger LOGGER = Logger.getLogger("de.htwg.se.schach.tuiInput");
 	
 	public TuiInput(Signal sig) {
 		this.sig = sig;
 	}
 	
-	private static final Logger LOGGER = Logger.getLogger("de.htwg.se.schach.tuiInput");
+	
 	
 	@Override
 	public void run() {
