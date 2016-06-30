@@ -109,13 +109,33 @@ public class PlayerHandler {
         }
     }
     
+    boolean checkNumberString(String str) {
+    	String[] parts = str.split("-");
+    	
+    	int colStart = ((int) parts[0].charAt(0)) - 65;
+
+        int rowStart = (int) parts[0].charAt(1) - 49;
+        if(!checkNumbers(colStart,rowStart)) {
+        	return false;
+        }
+        
+        int colEnd = ((int) parts[1].charAt(0)) - 65;
+
+        int rowEnd = (int) parts[1].charAt(1) - 49;
+        
+        if(!checkNumbers(colEnd,rowEnd)) {
+        	return false;
+        }
+        return true;
+    }
+    
     public boolean handleInput(String inp,int team) {
     	
     	if(("quit").equals(inp)) {
         	return true;
         }
     	
-        if(!preCheck(inp)) {
+        if(!preCheck(inp) || !checkNumberString(inp)) {
         	return false;
         }      
         
@@ -124,9 +144,6 @@ public class PlayerHandler {
         int colStart = ((int) parts[0].charAt(0)) - 65;
 
         int rowStart = (int) parts[0].charAt(1) - 49;
-        if(!checkNumbers(colStart,rowStart)) {
-        	return false;
-        }
         
         Position start = new Position(rowStart, colStart);
         if(!view.checkPiece(start, team)) {
@@ -134,14 +151,9 @@ public class PlayerHandler {
             return false;
         }
         
-
         int colEnd = ((int) parts[1].charAt(0)) - 65;
 
         int rowEnd = (int) parts[1].charAt(1) - 49;
-        
-        if(!checkNumbers(colEnd,rowEnd)) {
-        	return false;
-        }
         
         Position end = new Position(rowEnd, colEnd);
         return moveHelper(start,end,team,colStart,rowStart,colEnd,rowEnd);
