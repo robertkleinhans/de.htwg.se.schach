@@ -77,16 +77,9 @@ public class ChessView {
 
               
                 } else {
-                    if(figureHolder.containsKey(tmp)) {
-                    	
-                    	sb.append("[").append(String.valueOf(figureHolder.get(tmp).getTeam())).append(figureHolder.get(tmp).getName()).append("]");
-
-                    	
-                    } else {
-                    	sb.append("[---]");
-
-                     
-                    }
+                    sb.append("[");
+                    sb.append(innerPosition(tmp,figureHolder));
+                    sb.append("]");
                 }
             }
             LOGGER.info(sb.toString());

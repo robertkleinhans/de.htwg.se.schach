@@ -17,7 +17,7 @@ public class TuiInput extends Thread {
 		while(!Thread.currentThread().isInterrupted()) {
 			try{
 				holder = scan.nextLine();
-				this.sig.set_input(holder);
+				this.sig.setInput(holder);
 				if(("quit").equals(holder)) {
 					break;
 				}

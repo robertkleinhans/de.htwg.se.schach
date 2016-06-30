@@ -1,23 +1,23 @@
 package de.htwg.se.schach.view;
 
 public class Signal {
-	protected boolean input_given = false;
+	protected boolean inputGiven = false;
 	protected String command;
 	
-	public synchronized boolean input_given() {
-		return this.input_given;
+	public synchronized boolean inputGiven() {
+		return this.inputGiven;
 	}
 	
-	public synchronized String get_command() {
+	public synchronized String getCommand() {
 		return this.command;
 	}
 	
-	public synchronized void set_input(String com) {
+	public synchronized void setInput(String com) {
 		this.command = com;
-		this.input_given = true;
+		this.inputGiven = true;
 	}
 	
 	public synchronized void reset() {
-		this.input_given = false;
+		this.inputGiven = false;
 	}
 }

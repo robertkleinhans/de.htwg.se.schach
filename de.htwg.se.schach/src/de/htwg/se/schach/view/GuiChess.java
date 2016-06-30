@@ -16,8 +16,8 @@ import de.htwg.se.schach.model.Piece;
 
 public class GuiChess {
 	JFrame chessFrame;
-	final int MAXROW = 7;
-	final int MAXCOLUMN = 7;
+	static final int MAXROW = 7;
+	static final int MAXCOLUMN = 7;
 	private Map<Point,JLabel>boardBrain;
 	
 	Signal sig;
@@ -54,66 +54,67 @@ public class GuiChess {
         chessFrame.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                handle_click(e.getPoint());
+                handleClick(e.getPoint());
             }
         });
 	}
 	
 	
-	void initialize_helper(Position tmp, Map<Position,Piece> figs) {
+	void initializeHelper(Position tmp, Map<Position,Piece> figs) {
 		StringBuilder sb = new StringBuilder();
 		Point tmpPoint;
 		if (figs.containsKey(tmp)) {
-			Piece tmp_piece = figs.get(tmp);
-        	if (tmp_piece.getTeam() == 0) {
+			Piece tmpPiece = figs.get(tmp);
+        	if (tmpPiece.getTeam() == 0) {
         		sb.append("img/black");
         	} else {
         		sb.append("img/white");
         	}
         	
-        	tmpPoint = new Point(tmp_piece.getColumn()*80, tmp_piece.getRow()*80);
+        	tmpPoint = new Point(tmpPiece.getColumn()*80, tmpPiece.getRow()*80);
         	
-        	switch(tmp_piece.getCut()) {
+        	switch(tmpPiece.getCut()) {
         	
         	case "BI":
-        		sb.append("_bishop.png");
+        		sb.append("_bishop");
         		break;
         	case "KI":
-        		sb.append("_king.png");
+        		sb.append("_king");
         		break;
         	case "KN":
-        		sb.append("_knight.png");
+        		sb.append("_knight");
         		break;
         	case "PA":
-        		sb.append("_pawn.png");
+        		sb.append("_pawn");
         		break;
         	case "QU":
-        		sb.append("_queen.png");
+        		sb.append("_queen");
         		break;
         	case "RO":
-        		sb.append("_rook.png");
+        		sb.append("_rook");
         		break;
         	default:
         		break;
         	}
-        	add_piece(sb.toString(),tmpPoint.x,tmpPoint.y);
+        	sb.append(".png");
+        	addPiece(sb.toString(),tmpPoint.x,tmpPoint.y);
 		}
 	}
 	
-	public void initialize_pieces(Map<Position,Piece> figures) {
+	public void initializePieces(Map<Position,Piece> figures) {
 		for(int i = 0; i <= MAXROW; i++) {
             
             for(int j = 0; j <= MAXCOLUMN; j++) {
             	
             	Position tmp = new Position(i,j);
-                initialize_helper(tmp,figures);
+                initializeHelper(tmp,figures);
             }
         }
 		
 	}
 	
 
-    public void handle_click(Point p) {
+    public void handleClick(Point p) {
         int x = p.x - 25;
         int y = p.y - 25;
         int row = 0;
@@ -132,25 +133,25 @@ public class GuiChess {
         }
         row = counter;
         
-        char col_c = (char) (col+65);
+        char colC = (char) (col+65);
         StringBuilder sb = new StringBuilder();
         
         if(("").equals(first)) {
-        	sb.append(col_c).append(String.valueOf(row+1));
+        	sb.append(colC).append(String.valueOf(row+1));
         	this.first = sb.toString();
         	sb.setLength(0);
         	sb.append("show ").append(this.first);
-        	this.sig.set_input(sb.toString());
+        	this.sig.setInput(sb.toString());
         } else {
-        	sb.append(this.first).append("-").append(col_c).append(String.valueOf(row+1));
-        	this.sig.set_input(sb.toString());
+        	sb.append(this.first).append("-").append(colC).append(String.valueOf(row+1));
+        	this.sig.setInput(sb.toString());
         	this.first = "";
         }
         
     }
     
     
-    public void add_piece(String fname, int x, int y) {
+    public void addPiece(String fname, int x, int y) {
         
         ImageIcon icon = new ImageIcon(fname);
         
@@ -184,7 +185,7 @@ public class GuiChess {
     }
     
 
-    public void move_piece(Point start, Point end) {
+    public void movePiece(Point start, Point end) {
     	JLabel tmp = boardBrain.remove(start);
 
     	if(boardBrain.containsKey(end)) {

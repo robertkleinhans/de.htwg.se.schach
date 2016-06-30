@@ -116,7 +116,7 @@ public class PlayerHandler {
         
         Position end = new Position(rowEnd, colEnd);
         if(view.movePiece(start, end, team)) {
-        	gui.move_piece(new Point(colStart,rowStart), new Point(colEnd,rowEnd));
+        	gui.movePiece(new Point(colStart,rowStart), new Point(colEnd,rowEnd));
             return true;
         } else {
         	LOGGER.info(">>> Unknown Error : Could not make the move!");
@@ -139,7 +139,7 @@ public class PlayerHandler {
         StringBuilder sb = new StringBuilder();
         
         this.gui = new GuiChess(sig);
-        gui.initialize_pieces(this.mov.getField());
+        gui.initializePieces(this.mov.getField());
         TuiInput tui = new TuiInput(sig);
         tui.start();
         gui.show();
@@ -156,10 +156,10 @@ public class PlayerHandler {
         	LOGGER.info(sb.toString());
 
             
-            while(!sig.input_given()) {
+            while(!sig.inputGiven()) {
             	// busy waiting
             }
-            com = sig.get_command();
+            com = sig.getCommand();
             
             LOGGER.info(com);
 
