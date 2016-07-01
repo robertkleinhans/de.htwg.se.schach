@@ -16,3 +16,7 @@ Die Ausgabe wird erst durch die *ChessView* verifiziert, bevor die GUI benachric
 # 3. Struktur Control
 Die gesamte Spiellogik wird durch den *MovementHandler* gehalten und die einzige Klasse, die mit dieser Ebene kommuniziert, ist die *ChessView*. Auch die Spielfiguren auf der *Model-Ebene* haben keinerlei Informationen über ihre Position sondern lediglich, was für eine Figur sie sind.     
 Somit beinhaltet der *MovementHandler* alle Informationen über die Figuren und deren Positionen.
+
+# 4. GUI    
+In der GUI ist der erste Spieler immer *weiß* (nach dem Sprichwort "Weiß beginnt, Schwarz gewinnt"). Im Anschluss sind die Spieler abwechseln an der Reihe, um ihre Züge zu machen. Bei falschen Eingaben auf der TextUI oder ungültigen Bewegungen in der GUI wird der aktuelle Spieler benachrichtigt (nur auf der TUI).     
+Ein Spieler ist so lange an der Reihe, bis er einen gültigen Zug macht. Erst dann wird gewechselt.
