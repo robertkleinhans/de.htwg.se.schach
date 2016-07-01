@@ -183,6 +183,7 @@ public class PlayerHandler {
         tui.start();
         gui.show();
         
+        LOGGER.info(">>>>> NEW GAME STARTED !!!!! <<<<<");
         LOGGER.info("HINT: Write the movement like this: A2-A3");
         LOGGER.info("HINT: To see aviable moves: show D7");
         LOGGER.info(">>> Game started:");
@@ -214,7 +215,11 @@ public class PlayerHandler {
             if(mov.checkWin() != -1) {
         		LOGGER.info("[MATCH END]");
         		sb.setLength(0);
-        		sb.append("PLAYER ").append(String.valueOf(mov.checkWin())).append(" WON!%n");
+        		if(mov.checkWin() == 1) {
+        			sb.append("WHITE WON!");
+        		} else {
+        			sb.append("BLACK WON!");
+        		}
         		LOGGER.info(sb.toString());
         		LOGGER.info(">>> Closing now!");
         		gui.quit();
