@@ -6,8 +6,8 @@ import static org.junit.Assert.*;
 
 
 import de.htwg.se.schach.PlayerHandler;
-import de.htwg.se.schach.control.Position;
-import de.htwg.se.schach.view.Signal;
+import de.htwg.se.schach.view.I.SignalInter;
+import de.htwg.se.schach.view.impl.Signal;
 
 public class PlayerHandlerTest {
 	
@@ -56,7 +56,7 @@ public class PlayerHandlerTest {
 	
 	@Test
 	public void testHandleSignal() {
-		Signal sig = new Signal();
+		SignalInter sig = new Signal();
 		PlayerHandler pl = new PlayerHandler();
 		sig.setInput("quit");
 		pl.gameHandler(sig);

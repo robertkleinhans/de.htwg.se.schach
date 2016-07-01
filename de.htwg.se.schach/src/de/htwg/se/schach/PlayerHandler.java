@@ -7,27 +7,31 @@
 package de.htwg.se.schach;
 
 
-import de.htwg.se.schach.view.*;
+import de.htwg.se.schach.control.I.MovementHandlerInter;
+import de.htwg.se.schach.control.I.PositionInter;
+import de.htwg.se.schach.control.impl.MovementHandler;
+import de.htwg.se.schach.control.impl.Position;
+import de.htwg.se.schach.view.I.ChessViewInter;
+import de.htwg.se.schach.view.I.GuiChessInter;
+import de.htwg.se.schach.view.I.SignalInter;
+import de.htwg.se.schach.view.impl.*;
 
 import org.apache.log4j.Logger;
 
 
 import java.awt.Point;
-
-import de.htwg.se.schach.control.MovementHandler;
-import de.htwg.se.schach.control.Position;
 /**
  *
  * @author rob
  */
 public class PlayerHandler {
-    private ChessView view;
-    private GuiChess gui;
-    private MovementHandler mov;
+    private ChessViewInter view;
+    private GuiChessInter gui;
+    private MovementHandlerInter mov;
     String invalid = ">>> Invalid command!";
     String colError = ">>> The column must be between A and H!";
     String rowError = ">>> The row must be between 0 and 7!";
-    Signal sig;
+    SignalInter sig;
     
     
     private static final Logger LOGGER = Logger.getLogger("de.htwg.se.schach.playerHandler");
@@ -61,7 +65,7 @@ public class PlayerHandler {
         	LOGGER.info(rowError);
             return;
         }
-        Position start = new Position(rowStart, colStart);
+        PositionInter start = new Position(rowStart, colStart);
         
         view.viewMovement(start);
         
@@ -98,7 +102,7 @@ public class PlayerHandler {
     	return true;
     }
     
-    boolean moveHelper(Position start, Position end, int team, int colStart, int rowStart,
+    boolean moveHelper(PositionInter start, Position end, int team, int colStart, int rowStart,
     		int colEnd, int rowEnd) {
     	if(view.movePiece(start, end, team)) {
         	gui.movePiece(new Point(colStart,rowStart), new Point(colEnd,rowEnd));
@@ -145,7 +149,7 @@ public class PlayerHandler {
 
         int rowStart = (int) parts[0].charAt(1) - 49;
         
-        Position start = new Position(rowStart, colStart);
+        PositionInter start = new Position(rowStart, colStart);
         if(!view.checkPiece(start, team)) {
             LOGGER.info(">>> None of your Pieces are on this position!");
             return false;
@@ -165,7 +169,7 @@ public class PlayerHandler {
     
     
     
-    public void gameHandler(Signal sig) {
+    public void gameHandler(SignalInter sig) {
         int turn = 1;
         
         String com;
