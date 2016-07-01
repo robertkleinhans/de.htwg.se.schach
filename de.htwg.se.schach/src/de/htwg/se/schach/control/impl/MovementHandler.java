@@ -21,6 +21,7 @@ import de.htwg.se.schach.model.impl.*;
  *
  * @author rob
  */
+
 public class MovementHandler implements MovementHandlerInter {
 	private static final  int MAXCOLUMN = 7;
 	private static final  int MAXROW = 7;
