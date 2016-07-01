@@ -11,7 +11,6 @@ public class Chess {
 	public static void main(String[] args) {
 		
 		PropertyConfigurator.configure("log4j.properties");
-		
 		PlayerHandler play = new PlayerHandler();
 		play.startGame();
 	}

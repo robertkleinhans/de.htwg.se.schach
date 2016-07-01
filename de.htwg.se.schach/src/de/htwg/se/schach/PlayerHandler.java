@@ -43,7 +43,6 @@ public class PlayerHandler {
         sig = new Signal();
     }
     
-    
     public void startGame() {
         gameHandler(this.sig);
     }
